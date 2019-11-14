@@ -11,7 +11,11 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter=['user']
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display=['user','title','content','snippet','category']
+    list_display=['user','title','content','snippet','category','countCategory']
+
+    def countCategory(self,category):
+        count=self.model.objects.filter(category=category).count()
+    countCategory.short_description = 'count'
 
 class AnswerAdmin(admin.ModelAdmin):
     list_display=['user','question','answer']

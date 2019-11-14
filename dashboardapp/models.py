@@ -40,6 +40,12 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title
+    # @classmethod
+    # def countCategory(cls,category):
+    #     count=cls.objects.filter(category=category).count()
+    # @classmethod
+    # def countCategory(cls):
+    #     count=cls.objects.all().count()
 
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
