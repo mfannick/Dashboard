@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -128,3 +129,11 @@ STATICFILES_DIRS = (
 MEDIA_URL='/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+SITE_HOST = '127.0.0.1:8000'
+DEFAULT_FROM_EMAIL = 'Django Bookmarks '
+EMAIL_HOST = 'mail.yourisp.com'
+EMAIL_PORT = ''
+EMAIL_HOST_USER = 'username'
+EMAIL_HOST_PASSWORD = 'password'

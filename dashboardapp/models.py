@@ -3,29 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-# class Category(models.Model):
-#     categoryName=(
-#         ('HTML','HTML'),
-#         ('CSS','CSS'),
-#         ('Javascript','Javascript'),
-#         ('Angular','Angular'),
-#         ('Flask','Flask'),
-#         ('Django','Django'),
-#         ('Java','Java'),
-#         ('Android','Android'),
-#     )
-#     category=models.CharField(max_length=10,choices=categoryName)
-#     # count=.count(category)
-
-#     def __str__(self):
-#         return self.category
-
-class Question(models.Model):
-    user=models.ForeignKey(User)
-    title=models.CharField(max_length=10)
-    content=models.TextField(blank=True)
-    snippet=models.ImageField(upload_to='question/',blank=True)
-    # category=models.ManyToManyField(Category)
+class Category(models.Model):
     categoryName=(
         ('HTML','HTML'),
         ('CSS','CSS'),
@@ -37,15 +15,21 @@ class Question(models.Model):
         ('Android','Android'),
     )
     category=models.CharField(max_length=10,choices=categoryName)
+    # count=.count(category)
+
+    def __str__(self):
+        return self.category
+
+class Question(models.Model):
+    user=models.ForeignKey(User)
+    title=models.CharField(max_length=10)
+    content=models.TextField(blank=True)
+    snippet=models.ImageField(upload_to='question/',blank=True)
+    category=models.ForeignKey(Category)
 
     def __str__(self):
         return self.title
-    # @classmethod
-    # def countCategory(cls,category):
-    #     count=cls.objects.filter(category=category).count()
-    # @classmethod
-    # def countCategory(cls):
-    #     count=cls.objects.all().count()
+  
 
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
