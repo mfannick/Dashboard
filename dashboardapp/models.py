@@ -4,28 +4,27 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Category(models.Model):
-    categoryName=(
-        ('HTML','HTML'),
-        ('CSS','CSS'),
-        ('Javascript','Javascript'),
-        ('Angular','Angular'),
-        ('Flask','Flask'),
-        ('Django','Django'),
-        ('Java','Java'),
-        ('Android','Android'),
-    )
-    category=models.CharField(max_length=10,choices=categoryName)
-    # count=.count(category)
+    category_name = models.CharField(max_length = 30)
 
     def __str__(self):
-        return self.category
+        return self.category_name
 
 class Question(models.Model):
     user=models.ForeignKey(User)
-    title=models.CharField(max_length=10)
+    title=models.CharField(max_length=300)
     content=models.TextField(blank=True)
     snippet=models.ImageField(upload_to='question/',blank=True)
     category=models.ForeignKey(Category)
+
+    @classmethod
+    def get_related_question(self):
+        related = Question.objects.filter(category__in=self.object.category.all())
+        return related
+
+    @classmethod
+    def search_by_title(cls,search_term):
+        questions = cls.objects.filter(title__icontains = search_term)
+        return questions
 
     def __str__(self):
         return self.title

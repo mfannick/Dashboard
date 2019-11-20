@@ -32,7 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'dashboardapp',
+    'bootstrap4',
+    'dashboardapp.apps.DashboardappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -80,8 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dashboard',
-        'USER': 'annick',
-    'PASSWORD':'escofavi',
+        'USER': 'wecode',
+        'PASSWORD':'123',
     }
 }
 
@@ -118,7 +119,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+LOGOUT_REDIRECT_URL = '/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 

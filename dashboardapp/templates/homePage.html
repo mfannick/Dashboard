@@ -1,28 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+{%extends 'base.html'%}
+{% load staticfiles %}
+{% block content %}
+{{block.super}}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+<div class="container">
+        <a href="{% url 'question' %}" >Home</a>
+        <hr>
 
-<body>
-    <h1>ghjkl;</h1>
-    <h1>{{posts}}</h1>
-    <!-- {% for post in p%}
-    <p>{{post.title}}</p>
-    {%if post.content%}
-    <p>{{post.content}}</p>
-    {% else%}
-    {%if post.image%}
-    <img src="{{post.image.url}}" alt="">
-    {% else%}
-    <p>No snipet code</p>
-    {%endif%}
-    {%endif%}
-    {%endfor%} -->
-</body>
+    {% for categ in categories %}
+        <a href="{% url 'cate' categ.id%}"><h5> {{categ.category_name}} </h5></a>
 
-</html>
+      <hr>              
+      {% endfor %}
+
+
+  
+</div>
+{% endblock %}

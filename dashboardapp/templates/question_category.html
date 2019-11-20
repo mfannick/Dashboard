@@ -1,0 +1,33 @@
+{%extends 'base.html'%}
+{% load staticfiles %}
+{% block content %}
+{{block.super}}
+
+<div class="container">
+
+        {% if user.is_authenticated %}
+        <a href="/logout">Logout</a> 
+        {% else %}
+        <a  href="/accounts/login">Login</a> 
+        {% endif %}
+
+    <a href="{% url 'questions' %}" >Ask a question</a>
+
+    <form action="{% url 'search' %}" class="form-inline my-2 my-lg-0">
+            <input type="text" class="input-sm form-control" name="question" placeholder="Search">
+        </form>
+
+    {% if questions %}
+      <h5> {{questions.title}} </h5>
+      <h5> {{questions.content}} </h5>
+      <img src="{{quest.snippet.url}}" alt="">
+    <hr>              
+    {% endif %} 
+
+    {% for rel in related_question %}
+        <a href=""><p> {{rel.title}} </p></a>
+        <hr>              
+    {% endfor %}
+  
+</div>
+{% endblock %}
