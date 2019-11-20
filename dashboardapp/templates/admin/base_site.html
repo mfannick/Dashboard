@@ -1,15 +1,9 @@
 {% extends "admin/base.html" %}
 
-{% block title %} Moringa Help Desk{% endblock %}
-{% block extrastyle %}
-<style>
-    #header,.breadcrumbs{
-     background-color: green;
-    }
-</style>
-{% endblock %}
+{% block title %}  Moringa Help Desk{% endblock %}
+
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">Moringa Help Desk</a></h1>
+<h1 id="site-name"><a href="{% url 'admin:index' %}"> <img src="/static/image/moringa.png" alt="moringa" height="70px" width="100px"> Moringa Help Desk</a></h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}

@@ -1,0 +1,28 @@
+<link href="https://fonts.googleapis.com/css?family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+{% extends 'base.html'%}
+{% load bootstrap4%}
+{% block content%}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h3 class="card-header light-color black-text text-center py-4" style="font-family: 'Zhi Mang Xing', cursive;">
+            <strong>Update profile</strong>
+        </h3>
+
+        <div class="card-body px-lg-5 pt-0">
+
+            <form class="text-center" style="color: #757575;" method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class=" form-group">
+                    <button class="btn btn-outline-info  btn-sm" type="submit">Update</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+
+    {% endblock%}
