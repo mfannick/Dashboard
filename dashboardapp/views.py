@@ -25,17 +25,6 @@ def learn(request):
     post_question = Question.objects.all()
     return render(request,'all-pages/learn.html',{"post_question":post_question})  
 
-
-def homePage(request):
-  
-    categories = Category.objects.all()
-    return render(request,'home.html',{"categories": categories})
-
-
-def questions(request):
-    post_question = Question.objects.all()
-    return render(request,'question.html',{"post_question": post_question})
-
 def question_answer(request, id):
     question = Question.objects.filter(id = id).first()
     myanswers = Answer.objects.filter(question = question.id).all()
@@ -47,7 +36,6 @@ def question_answer(request, id):
 
 # @login_required(login_url='/accounts/login/')
 def post_question(request):
-    
     current_user = request.user
     if request.method == 'POST':
         form = NewQuestionForm(request.POST, request.FILES)
