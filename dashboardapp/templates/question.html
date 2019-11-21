@@ -1,4 +1,4 @@
-{%extends 'base.html'%}
+{%extends 'all-pages/base.html'%}
 {% load staticfiles %}
 {% block content %}
 {{block.super}}
@@ -11,17 +11,9 @@
         <a  href="/accounts/login">Login</a> 
         {% endif %}
 
-    <a href="{% url 'questions' %}" >Ask a question</a>
 
-    <form action="{% url 'search' %}" class="form-inline my-2 my-lg-0">
-            <input type="text" class="input-sm form-control" name="question" placeholder="Search">
-        </form>
-
-    {% for cont in posts %}
-      <h5> {{cont.title}} </h5>
-      <h5> {{cont.content}} </h5>
-      <img src="{{cont.snippet.url}}" alt="">
-    <hr>              
+    {% for cont in post_question %}
+      <a href="{% url 'q_answer' cont.id%}"><h5> {{cont.title}} </h5></a>             
     {% endfor %} 
   
 </div>

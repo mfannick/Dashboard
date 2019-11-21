@@ -1,4 +1,4 @@
-{%extends 'base.html'%}
+{%extends 'all-pages/base.html'%}
 {% load staticfiles %}
 {% block content %}
 {{block.super}}
@@ -21,6 +21,13 @@
       <h5> {{questions.title}} </h5>
       <h5> {{questions.content}} </h5>
       <img src="{{quest.snippet.url}}" alt="">
+
+      {% for answer in questions.answer_set.all %}
+                <div class="bg-light mb-2 p-2 border">
+                    <strong>{{answer.user}}: </strong>
+                    <span>{{answer.answer}}</span>
+                </div>
+                {% endfor%}
     <hr>              
     {% endif %} 
 
