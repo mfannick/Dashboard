@@ -149,7 +149,7 @@ footer{
          </p>
       </div>
       <div class="col-md-8">
-         <h2>Questions & Answers</h2>
+         <h2>Questions in {{categories.category_name}}</h2>
          <ul class="nav nav-tabs" role="tablist" style="width:260px;float:right;">
             <li class="nav-item">
                <a class="nav-link active" data-toggle="tab" href="#home" style="color:#556B2F;">All</a>
@@ -161,30 +161,15 @@ footer{
                <a class="nav-link" data-toggle="tab" href="#menu2" style="color:#556B2F;">Votes</a>
             </li>
          </ul><br><br><br><br>
-         {% if questions %}
-         <h5> {{questions.title}} </h5>
-         <h5> {{questions.content}} </h5>
-         <img src="{{quest.snippet.url}}" alt="">
-   
-         {% for answer in questions.answer_set.all %}
-                   <div class="bg-light mb-2 p-2 border">
-                       <strong>{{answer.user}}: </strong>
-                       <span>{{answer.answer}}</span>
-                   </div>
-                   {% endfor%}
-       <hr>              
-       {% endif %}  
-
+         {% for  question in questions %}
+         <a href="{% url 'q_answer' question.id%}"><p> {{question.title}} </p></a>
+          {% endfor%}             
+     
       </div>
       <div class="col-md-2">
         <button class="btn btn-success" style="background-color: #556B2F;">Ask Question</button>
         <br><br><br><br><br>
-        <h6>Related Question</h6>
-        <br>
-        {% for rel in related_question %}
-        <a href=""><p> {{rel.title}} </p></a>
-        <hr>              
-    {% endfor %}
+        
       </div>
    </div>
    

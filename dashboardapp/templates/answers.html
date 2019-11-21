@@ -159,12 +159,12 @@ footer{
                <a class="nav-link" data-toggle="tab" href="#menu2" style="color:#556B2F;">Votes</a>
             </li>
          </ul><br><br><br><br>
-         {% if question %}
-            <h5> {{question.title}} </h5>
-            <h5> {{question.content}} </h5>
+         {% if questions %}
+            <h5> {{questions.title}} </h5>
+            <h5> {{questions.content}} </h5>
             <img src="{{quest.snippet.url}}" alt="">
 
-            {% for answer in question.answer_set.all %}
+            {% for answer in questions.answer_set.all %}
               
                 <h5>{{answer.user}}: <span>{{answer.answer}} </h5></span>
                 <hr>
@@ -181,7 +181,7 @@ footer{
         <p>1. Where Do You Like To Go When You Eat Out?</p>
         <p>2. Do You Like To Cook?</p>
         {% for rel in related_question %}
-        <a href=""><p> {{rel.title}} </p></a>
+        <a href="{% url 'q_answer' rel.id%}"><p> {{rel.title}} </p></a>
         <hr>              
         {% endfor %}
       </div>

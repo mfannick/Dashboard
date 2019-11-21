@@ -14,11 +14,11 @@ def page(request):
 
 def question_category(request, id):
     q_category = Category.objects.filter(id = id).first()
-    questions = Question.objects.filter(category = q_category.id).first()
-    answer = Answer.objects.filter(question = questions.id).first()
-    myanswers = Answer.objects.filter(question = answer.id).all()
-    related_question = Question.objects.filter(category = q_category.id).all()
-    return render(request,'question_category.html',{'q_category':q_category,"id":id,"questions":questions,"related_question":related_question,"answer":answer,"myanswers":myanswers})
+    questions = Question.objects.filter(category = q_category.id).all()
+    # answer = Answer.objects.filter(question = questions.id).first()
+    # myanswers = Answer.objects.filter(question = questions.id).all()
+    # related_question = Question.objects.filter(category = q_category.id).all()
+    return render(request,'question_category.html',{'q_category':q_category,"id":id,"questions":questions})
 
 
 def learn(request):
@@ -26,12 +26,19 @@ def learn(request):
     return render(request,'all-pages/learn.html',{"post_question":post_question})  
 
 def question_answer(request, id):
-    question = Question.objects.filter(id = id).first()
-    myanswers = Answer.objects.filter(question = question.id).all()
-    # q_category = Category.objects.filter(id = id).first()
-    # questions = Question.objects.filter(category = q_category.id).first()
-    # myanswers = Answer.objects.filter(question = questions.id).all()        
-    return render(request,'answers.html',{'question':question,"id":id, "myanswers":myanswers})
+    questions = Question.objects.filter(id = id).first()
+    q_category = Category.objects.filter(id = questions.category.id).first() 
+    answer = Answer.objects.filter(question = questions.id).all()
+    
+    related_question = Question.objects.filter(category = q_category.id).all()
+    return render(request,'answers.html',{'q_category':q_category,"id":id,"questions":questions,"related_question":related_question,"answer":answer})
+
+    # question = Question.objects.filter(id = id).first()
+    # myanswers = Answer.objects.filter(question = question.id).all()
+    # # q_category = Category.objects.filter(id = id).first()
+    # # questions = Question.objects.filter(category = q_category.id).first()
+    # # myanswers = Answer.objects.filter(question = questions.id).all()        
+    # return render(request,'answers.html',{'question':question,"id":id, "myanswers":myanswers})
 
 
 # @login_required(login_url='/accounts/login/')
