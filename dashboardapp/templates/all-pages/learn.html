@@ -158,17 +158,15 @@ footer{
             </li>
          </ul><br><br><br><br>
          {% for cont in post_question %}
-      <a href="{% url 'q_answer' cont.id%}"><h5> {{cont.title}} </h5></a>             
+      <a href="{% url 'q_answer' cont.id%}"><h5> {{cont.title}} </h5></a>
+      
+      <h5> <strong>{{cont.answer_set.all|length}} answers:</strong> {{cont.content}}</h5>            
     {% endfor %} 
      
       </div>
       <div class="col-md-2">
          <a href="{% url 'questions' %}" class="btn btn-success" style="background-color: #556B2F;">Ask a question</a>
         <br><br><br><br><br>
-        <h6>Related Question</h6>
-        <br>
-        <p>1. Where Do You Like To Go When You Eat Out?</p>
-        <p>2. Do You Like To Cook?</p>
       </div>
    </div>
    

@@ -163,6 +163,7 @@ footer{
          </ul><br><br><br><br>
          {% for  question in questions %}
          <a href="{% url 'q_answer' question.id%}"><p> {{question.title}} </p></a>
+         
           {% endfor%}             
      
       </div>

@@ -1,45 +1,34 @@
 from django.shortcuts import render,redirect
+from django.db.models import Q
 from django.http  import HttpResponse,Http404,HttpResponseRedirect
 from .models import Question,Category,Answer,Profile
 from .forms import NewQuestionForm,AnswerForm,ProfileForm
 from django.contrib.auth.decorators import login_required
-
-
 # Create your views here.
-# @login_required(login_url='/accounts/login/')
 
+# @login_required(login_url='/accounts/login/')
 def page(request):
     categories = Category.objects.all()
     return render(request,'all-pages/index.html',{"categories": categories})
 
+# @login_required(login_url='/accounts/login/')
 def question_category(request, id):
     q_category = Category.objects.filter(id = id).first()
     questions = Question.objects.filter(category = q_category.id).all()
-    # answer = Answer.objects.filter(question = questions.id).first()
-    # myanswers = Answer.objects.filter(question = questions.id).all()
-    # related_question = Question.objects.filter(category = q_category.id).all()
     return render(request,'question_category.html',{'q_category':q_category,"id":id,"questions":questions})
 
-
+# @login_required(login_url='/accounts/login/')
 def learn(request):
     post_question = Question.objects.all()
     return render(request,'all-pages/learn.html',{"post_question":post_question})  
 
+# @login_required(login_url='/accounts/login/')
 def question_answer(request, id):
     questions = Question.objects.filter(id = id).first()
     q_category = Category.objects.filter(id = questions.category.id).first() 
     answer = Answer.objects.filter(question = questions.id).all()
-    
     related_question = Question.objects.filter(category = q_category.id).all()
     return render(request,'answers.html',{'q_category':q_category,"id":id,"questions":questions,"related_question":related_question,"answer":answer})
-
-    # question = Question.objects.filter(id = id).first()
-    # myanswers = Answer.objects.filter(question = question.id).all()
-    # # q_category = Category.objects.filter(id = id).first()
-    # # questions = Question.objects.filter(category = q_category.id).first()
-    # # myanswers = Answer.objects.filter(question = questions.id).all()        
-    # return render(request,'answers.html',{'question':question,"id":id, "myanswers":myanswers})
-
 
 # @login_required(login_url='/accounts/login/')
 def post_question(request):
@@ -56,12 +45,6 @@ def post_question(request):
         form = NewQuestionForm()
     return render(request, 'post_question.html', {"form": form})
 
-def home(request):
-    current_user = request.user
-    posts=Question.objects.all()
-    solutions = Answer.objects.filter(id = current_user.id).first()
-    return render(request,'all.html',{'posts':posts,"solutions":solutions})
-
 # @login_required(login_url='/accounts/login')
 def post_answer(request, id):
     current_user = request.user
@@ -74,12 +57,13 @@ def post_answer(request, id):
             answers.user = current_user
             answers.question = question
             answers.save()
-            return redirect('home')
+            return redirect('q_answer', id)
     else:
         form = AnswerForm()
     title = "Question"
     return render(request, 'add_answer.html',{"form":form, "id":id} )
 
+# @login_required(login_url='/accounts/login/')
 def new_profile(request):
   current_user = request.user
   new_profile = Profile.objects.filter(id=current_user.id)
@@ -97,12 +81,14 @@ def new_profile(request):
 def profile(request):
     return render(request,'all-pages/profile.html',{})
 
+# @login_required(login_url='/accounts/login/')
 def profile(request):
  current_user = request.user
  myprofile = Profile.objects.filter(user = current_user).first()
  username = User.objects.filter(id = current_user.id).first()
  return render(request, 'profile.html', { "myprofile":myprofile})
 
+# @login_required(login_url='/accounts/login/')
 def search_question(request):
     if 'question' in request.GET and request.GET["question"]:
         search_term = request.GET.get("question")
