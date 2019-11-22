@@ -67,10 +67,21 @@ var TxtRotate = function(el, toRotate, period) {
    };
 </script>
 <style>
+    /* Media Queries: Tablet Landscape */
+@media screen and (max-width: 1060px) {
+    #primary { width:67%; }
+    #secondary { width:30%; margin-left:3%;}  
+}
+
+/* Media Queries: Tabled Portrait */
+@media screen and (max-width: 768px) {
+    #primary { width:100%; }
+    #secondary { width:100%; margin:0; border:none; }
+}
 .wells{
    position: relative;
    background-color: rgba(82, 124, 43, 0.3);
-   width: 100% ;
+   width: 1290px ;
    height:439px;
    top: -98px;
    color: rgb(0, 0, 0);
@@ -78,6 +89,7 @@ var TxtRotate = function(el, toRotate, period) {
 }
 .well{
    background-color: rgba(255, 255, 255);
+   width: 1290px;
 }
 footer{
    background-color: #556B2F;
@@ -153,18 +165,15 @@ footer{
 h1:hover {
   color: #556B2F;
 }
-h3:hover {
-  color: #556B2F;
-}
 </style>
-<body style="background-image: url(/static/images/Outsourcing-Development-Work_CoolCat-Digital-1400x605.jpg);background-repeat: no-repeat;background-size: 100% 90%;position: absolute;background-attachment: fixed;">
+<body style="background-image: url(/static/images/Outsourcing-Development-Work_CoolCat-Digital-1400x605.jpg);background-repeat: no-repeat;background-size: 100% 100%;position: absolute;background-attachment: fixed;">
 <div class="wells">
-<div class="row">
+    <div class="row">
    <div class="col-md-1"></div>
    <div class="col-md-4" style="margin-top:100px;margin-left:200px;font-family: 'Raleway', sans-serif;
    transform: translateX(-50%) rotate(-5deg);">
-      <h1><span class="title txt-rotate" data-period="2000" data-rotate='["Why do we use it?"]'></span></h1><br>
-      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+      <h1><span class="title txt-rotate" data-period="2000" data-rotate='["Women in Technology"]'></span></h1><br>
+      <p style="font-size: 20px;font-family: 'Raleway', sans-serif;">Training Our Next Young Women Generation of Tech Leaders,</p>
    </div>
    <div class="col-md-7"></div>
 </div>
@@ -192,25 +201,22 @@ h3:hover {
                   <div class="col-md-1"></div>
                </div> 
    </div><br>
-   <div class="container">
-       <h3 style="text-align: center;">A better way to collaborate,help each other and share knowledge</h3>
-   </div>
-</div>   
-
+       <h3 style="text-align: center;font-family: 'Raleway', sans-serif;">"A better way to collaborate,help each other and share knowledge"</h3>
+ 
 <footer>
       <div class="container-fluid py-3">
           <div class="row">
-              <div class="col-md-3" style="font-size: 12px;">@CopyRight.2019___</div>
+              <div class="col-md-3"></div>
               <div class="col-md-3"></div>
               <div class="col-md-3"></div>
               <div class="col-md-3"></div>
           </div>
           <div class="row">
-              <div class="col-md-8"></div>
+              <div class="col-md-8" style="font-size: 12px;">@CopyRight.2019___</div>
               <div class="col-md-4 text-right small align-self-end"><p><a href="" style="color: black;">Privacy policy</a>   <a href="" style="color: black;">Acceptable</a>   <a href="" style="color: black;">Facebook</a>   <a href="" style="color: black;">Twitter</a> </p></div>
           </div>
       </div>
-  </footer>
+  </footer></div>
 </body>
 </html>
 {% endblock %} 
