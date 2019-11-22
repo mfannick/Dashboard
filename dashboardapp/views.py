@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 
 
 
-
 # Create your views here.
 
 def homePage(request):
@@ -43,7 +42,7 @@ def signUp(request):
             # useN=form.cleaned_data.get('username')
             send_welcome_email(username,email)
             # userN=form.cleaned_data.get('username')
-            messages.success(request,f'{username} , your account was successfuly created')
+            messages.success(request,f'{username} , your account was successfuly created check your email to log in')
             return redirect('logIn')
     else:
         form=UserRegistrationForm()

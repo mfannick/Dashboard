@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class UserRegistrationForm(UserCreationForm):
-   
+    email=forms.EmailField()
     class Meta:
         model=User
         fields=['username','email','password1','password2']
@@ -16,3 +16,6 @@ class UserRegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class PasswordResetRequestForm(forms.Form):
+    email_or_username = forms.CharField(label=("Email Or Username"), max_length=254)

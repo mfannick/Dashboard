@@ -33,7 +33,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'dashboardapp',
+    'crispy_forms',
     'bootstrap4',
+    'bootstrap3',
      'jet.dashboard',
      'jet',
     'django.contrib.admin',
@@ -137,6 +139,7 @@ JET_DEFAULT_THEME = 'green'
 JET_SIDE_MENU_COMPACT = True
 
 # Email configurations remember to install python-decouple
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = config('EMAIL_USE_TLS')
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')

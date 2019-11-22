@@ -21,7 +21,7 @@ class Category(models.Model):
         return self.category
 
 class Question(models.Model):
-    user=models.ForeignKey(User)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
     title=models.CharField(max_length=10)
     content=models.TextField(blank=True)
     snippet=models.ImageField(upload_to='question/',blank=True)

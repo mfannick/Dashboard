@@ -14,29 +14,28 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+<style>
+.btn{
+    background-color: #556B2F;
+}
+</style>
 {% extends 'base.html'%}
 {% load bootstrap4%}
 {% block content%}
-<br>
-<br>
-<div class="row">
+<div class="row" style="margin-bottom: 30px;">
     <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <h3 class="card-header light-color black-text text-center py-4" style="font-family: 'Zhi Mang Xing', cursive;">
-            <strong>Register</strong>
-        </h3>
-
-        <div class="card-body px-lg-5 pt-0">
-
-            <form class="text-center" style="color: #757575;" action="{% url 'signUp' %}" method="post"
+    <div class="col-md-4" style="box-shadow: 5px 5px 7px 7px #556B2F;"><br>
+        <img src="/static/image/moringa.png" style="margin-left:10px;height:100px; width:200px;">
+        <h3 class="text-center" style="font-family: 'Source Sans Pro', sans-serif;color: #556B2F;">Register</h3>
+        <div class="card-body ">
+            <form style="color: #556B2F;" action="{% url 'signUp' %}" method="post"
                 enctype="multipart/form-data">
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 <div class=" form-group">
-                    <button class="btn btn-outline-info  btn-sm" type="submit">SignUp</button>
+                    <input  type="submit" class="btn btn-success" style="background-color: #556B2F;" value="SignUp">
                 </div>
-
             </form>
         </div>
         <div class="col-md-3"></div>
