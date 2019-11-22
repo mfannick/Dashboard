@@ -1,0 +1,17 @@
+{%extends 'all-pages/base.html'%} 
+{% block content %}
+<div class="container">
+
+  {% if questions %}
+    {% for question in questions %}
+     
+          <h3>{{question.title}}</h3>
+          <h3>{{question.content}}</h3>
+          <img src="{{question.snippet.url}}" alt="">
+      
+    {% endfor %}
+  {% endif %}
+
+
+</div>
+{% endblock %}
