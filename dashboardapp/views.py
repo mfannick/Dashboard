@@ -3,10 +3,17 @@ from django.http  import HttpResponse,Http404,HttpResponseRedirect
 from .models import Question,Category,Answer,Profile
 from .forms import NewQuestionForm,AnswerForm,ProfileForm
 from django.contrib.auth.decorators import login_required
-
+# from .models import Post,Profiles,Answer,Category
+from .models import Question,Invitation
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from .forms import UserRegistrationForm
+from django.contrib import messages
+from django.contrib.auth import login,logout, authenticate
+from .email import send_welcome_email
+from django.contrib.auth.models import User
 
 # Create your views here.
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 
 def page(request):
     categories = Category.objects.all()
@@ -34,7 +41,7 @@ def question_answer(request, id):
     return render(request,'all-pages/answers.html',{'question':question,"id":id, "myanswers":myanswers})
 
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def post_question(request):
     current_user = request.user
     if request.method == 'POST':
@@ -55,7 +62,7 @@ def home(request):
     solutions = Answer.objects.filter(id = current_user.id).first()
     return render(request,'all-pages/all.html',{'posts':posts,"solutions":solutions})
 
-# @login_required(login_url='/accounts/login')
+@login_required(login_url='/accounts/login')
 def post_answer(request, id):
     current_user = request.user
     question = Question.objects.filter(id=id).first()
@@ -108,3 +115,44 @@ def search_question(request):
         return render(request, 'all-pages/search.html',{"message":message})
 def profile(request):
     return render(request,'all-pages/profile.html',{})  
+
+def signUp(request):
+    currentUser=request.user
+    if request.method=='POST':
+        form=UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username=form.cleaned_data.get('username')
+            email=form.cleaned_data.get('email')
+            # username = form.cleaned_data['username']
+            # email = form.cleaned_data['email']
+            # password1 = form.cleaned_data['password1']
+            # password2 = form.cleaned_data['password2']
+            # user = User(username = username,email =email)
+            # user.save()
+            # useN=form.cleaned_data.get('username')
+            send_welcome_email(username,email)
+            # userN=form.cleaned_data.get('username')
+            messages.success(request,f'{username} , your account was successfuly created check your email to log in')
+            return redirect('admin')
+    else:
+        form=UserRegistrationForm()
+    return render(request,'auth/signUp.html',{'form':form})
+def logIn(request):
+    if request.method=='POST':
+        form=AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user=form.get_user()
+            login(request,user)
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+            else:
+                return redirect('page')
+    else:
+        form=AuthenticationForm()
+    return render(request,'auth/logIn.html',{'form':form})
+def logOut(request):
+    if request.method=='POST':
+        logout(request)
+    return redirect('logIn')
+

@@ -157,7 +157,12 @@ footer{
                <a class="nav-link" data-toggle="tab" href="#menu2" style="color:#556B2F;">Your Post</a>
             </li>
          </ul><br><br>
+         <form action="{% url 'logOut'%}" method="post" style="float: right;">
+                {% csrf_token%}
+                <button class="btn btn-success" type="submit" style="background-color: #556B2F;">logout</button>
+            </form>
          <div class="col-md-3 col-sm-6">
+            
             <div class="card card-block">
                 <a href="" class="card-title text-right"><i class="fa fa-cogs" aria-hidden="true"></i></a>
                 <div class="card profile-card-2">

@@ -1,0 +1,10 @@
+.wells{
+    position: absolute;
+    background-color: rgba(82, 124, 43, 0.3);
+    width: 100% ;
+    height:100%;
+    top:0px;
+    color: white;
+    float: right;
+    margin:  0px 0px 0 0;
+}
