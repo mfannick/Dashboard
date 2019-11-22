@@ -162,8 +162,18 @@ footer{
          {% if questions %}
             <h5> {{questions.title}} </h5>
             <h5> {{questions.content}} </h5>
-           <h5> <img src="{{questions.snippet.url}}" alt=""></h5>
-
+           {% for answer in questions.answer_set.all %}
+              
+                <h5>{{answer.user}}: <span>{{answer.answer}} </h5></span>
+                <hr>
+            {% endfor%}
+            <a href="{%url 'answer' questions.id %}" style="margin: 10px; text-decoration: none;">
+                  <button type="button" class="btn btn-default btn-inverse"><strong>Add answer</strong> </button> </a>
+            {% else %}
+            <h5> {{questions.title}} </h5>
+            <h5> {{questions.content}} </h5>
+            <h5> <img src="{{questions.snippet.url}}" alt=""></h5>
+            
             {% for answer in questions.answer_set.all %}
               
                 <h5>{{answer.user}}: <span>{{answer.answer}} </h5></span>
@@ -175,7 +185,7 @@ footer{
 
       </div>
       <div class="col-md-2">
-        <button class="btn btn-success" style="background-color: #556B2F;">Ask Question</button>
+         <a href="{% url 'questions' %}" class="btn btn-success" style="background-color: #556B2F;">Ask a question</a>
         <br><br><br><br><br>
         <h6>Related Question</h6>
         {% for rel in related_question %}

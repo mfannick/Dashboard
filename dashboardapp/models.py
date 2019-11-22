@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Category(models.Model):
-    category_name = models.CharField(max_length = 30)
+    category_name = models.CharField(max_length = 30, null=True)
     category_image = models.ImageField(upload_to='category_image/',blank=True,null = True)
     description = models.CharField(max_length = 300, null = True)
 
@@ -15,7 +15,7 @@ class Question(models.Model):
     user=models.ForeignKey(User)
     title=models.CharField(max_length=300)
     content=models.TextField(blank=True)
-    snippet=models.ImageField(upload_to='question/',blank=True)
+    snippet=models.ImageField(upload_to='question/',blank =True, null=True)
     category=models.ForeignKey(Category, related_name='category')
 
     @classmethod
@@ -71,6 +71,10 @@ class Vote(models.Model):
 
     def __str__(self):
         return self.name.user.username
+
+class Invitation(models.Model):
+    name=models.CharField(max_length=30)
+    email=models.EmailField()
 
 
 

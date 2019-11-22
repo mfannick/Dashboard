@@ -91,10 +91,10 @@ footer{
     background: white;
 }
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1550px) {
     .card {
         flex-basis: calc(33.33% - (62px + 40px));
-        margin: 0 31px;
+        margin: 0 21px;
     }
 }
 
@@ -104,6 +104,7 @@ footer{
 
 .card__img {
     margin: -20px -20px 0;
+    height: 600px;
 }
 
 .card__img img {
@@ -152,6 +153,9 @@ footer{
 h1:hover {
   color: #556B2F;
 }
+h3:hover {
+  color: #556B2F;
+}
 </style>
 <body style="background-image: url(/static/images/Outsourcing-Development-Work_CoolCat-Digital-1400x605.jpg);background-repeat: no-repeat;background-size: 100% 90%;position: absolute;background-attachment: fixed;">
 <div class="wells">
@@ -167,25 +171,30 @@ h1:hover {
 </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div class="well" style="font-family: 'Raleway', sans-serif;">
    <h1 style="text-align: center;">COURSES PACKAGES</h1>
-   <div class="row" style="margin-top:3%">
-      
-      {% for categ in categories %}            
-      <div class="col-md-1"></div>
-      <div class="col-md-3" style="margin-bottom:3%">
-         <div class="card card__one">
-            <figure class="card__img">
-               <img src="{{categ.category_image.url}}" width="500" height="400" class="card-img-top">
-               <div class="card-body">
-                  <!-- <h5 class="card-title">HTML & CSS</h5> -->
-                  <a href="{% url 'cate' categ.id%}"><h5> {{categ.category_name}} </h5></a>
-                  <!-- <p class="card-text">{{categ.description}}</p> -->
-                  <a href="#" class="btn btn-success">More...</a> 
-               </div>
-            </figure>
-         </div> 
-      </div>
-      {% endfor %}
-   </div> 
+   <div class="container">
+        <div class="row">
+                <!-- <div class="col-md-1"></div> -->
+                  {% for categ in categories %}
+                  <div class="col-md-1"></div>            
+                  <div class="col-md-3">
+                     <div class="card card__one">
+                        <figure class="card__img">
+                           <img src="{{categ.category_image.url}}"  class="card-img-top">
+                           <div class="card-body">
+                              <h5 class="card-title"> {{categ.category_name}} </h5>
+                              <p class="card-text">{{categ.description}}</p>
+                              <a href="{% url 'cate' categ.id%}" class="btn btn-success">More...</a> 
+                           </div>
+                        </figure>
+                     </div> 
+                  </div>
+                  {% endfor %}            
+                  <div class="col-md-1"></div>
+               </div> 
+   </div><br>
+   <div class="container">
+       <h3 style="text-align: center;">A better way to collaborate,help each other and share knowledge</h3>
+   </div>
 </div>   
 
 <footer>

@@ -10,11 +10,13 @@
    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
    <title>HelpDesk Automated</title>
    <link rel="stylesheet" href="/static/css/index.css">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <style>
 /* Search */
@@ -128,23 +130,56 @@ footer{
 	box-shadow: 0 0 0 1px #556B2F inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
 	background-color: #556B2F;
 }
+/*Profile card 2*/
+.card-img-block{
+   float:left;
+   width:108%;
+   height:100px;
+   overflow:hidden;
+}
+.card-body{
+   position:relative;
+}
+.profile {
+  border-radius: 75%;
+  position: absolute;
+  top: 42px;
+  left: 20%;;
+  max-width: 85px;
+  border: 3px solid rgba(255, 255, 255, 1);
+  -webkit-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
+}
+h5{
+   margin-top: 104px;
+   font-weight:200;
+   color:#556B2F;
+   font-size:19px;
+}
 </style>
 <body>
 <div style="margin-top:-99px;">
-   <div class="row">
-      <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
-         <img src="/static/images/head.jpeg" class="profile">
-         <h5>Name</h5>
-         <br><br>
-         <form>
-            <input type="search" placeholder="Find Someone">
-         </form>
-         <br><br><br><br><br><br><br><br><br><br><br>
-         <p>
-            <button type="button" class="btn btn-success btn-lg btn3d"><span class="glyphicon glyphicon-send"></span></button>
-         </p>
+      <div class="row">
+            <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
+               <div>
+                  <div class="card-img-block">
+                     <img class="img-fluid" src="https://images.pexels.com/photos/870903/pexels-photo-870903.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="Card image cap">
+                  </div>
+                  <div class="card-body pt-5">
+                     <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="profile-image" class="profile"/>
+                     <h5 class="card-title">Landon Hunt</h5>
+                  </div>
+               </div>
+               <br>
+               <form>
+                  <input type="search" placeholder="Find Someone">
+               </form>
+               <br><br><br><br><br><br><br><br><br><br><br>
+               <p>
+                  <button type="button" class="btn btn-success btn-lg btn3d"><span class="glyphicon glyphicon-send"></span></button>
+               </p>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-7">
          <h2>Questions </h2>
          <ul class="nav nav-tabs" role="tablist" style="width:260px;float:right;">
             <li class="nav-item">
@@ -158,14 +193,13 @@ footer{
             </li>
          </ul><br><br><br><br>
          {% for cont in post_question %}
-      <a href="{% url 'q_answer' cont.id%}"><h5> {{cont.title}} </h5></a>
-      
-      <h5> <strong>{{cont.answer_set.all|length}} answers:</strong> {{cont.content}}</h5>            
-    {% endfor %} 
+         <a href="{% url 'q_answer' cont.id%}"><p> {{cont.title}} </p></a>
+         <p> <strong>{{cont.answer_set.all|length}} answers:</strong> {{cont.content}}</p>            
+         {% endfor %} 
      
       </div>
       <div class="col-md-2">
-         <a href="{% url 'questions' %}" class="btn btn-success" style="background-color: #556B2F;">Ask a question</a>
+            <a href="{% url 'questions' %}" class="btn btn-success" style="background-color: #556B2F;">Ask a question</a>
         <br><br><br><br><br>
       </div>
    </div>

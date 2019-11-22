@@ -29,32 +29,33 @@
   transition:0.5s;
   cursor:pointer;
   margin-left: 20px;
-  width: 270px;
-  bottom: 40px;
+  width: 260px;
+  bottom: 30px;
 
 }
 .card-title{  
   font-size:15px;
   transition:1s;
   cursor:pointer;
+  margin: 5px;
 }
 .card-title i{  
   font-size:15px;
   transition:1s;
   cursor:pointer;
-  color:#ffa710
+  color:#556B2F;
 }
 .card-title i:hover{
   transform: scale(1.25) rotate(100deg); 
-  color:#18d4ca;
+  color:rgb(162, 252, 7);
   
 }
 .card:hover{
   transform: scale(1.05);
-  box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
 }
 .card-text{
-  height:80px;  
+  height:50px;  
 }
 
 .card::before, .card::after {
@@ -82,7 +83,7 @@
 .profile-card-2 .card-img-block{
     float:left;
     width:100%;
-    height:150px;
+    height:130px;
     overflow:hidden;
 }
 .profile-card-2 .card-body{
@@ -91,19 +92,19 @@
 .profile-card-2 .profile {
   border-radius: 75%;
   position: absolute;
-  top: -112px;
-  left: 25%;
+  top: -52px;
+  left: 20%;
   max-width: 85px;
   border: 3px solid rgba(255, 255, 255, 1);
   -webkit-transform: translate(-50%, 0%);
   transform: translate(-50%, 0%);
 }
 .profile-card-2 h5{
-    font-weight:600;
-    color:#6ab04c;
+    font-weight:400;
+    color:#556B2F;
 }
 .profile-card-2 .card-text{
-    font-weight:300;
+    font-weight:200;
     font-size:15px;
 }
 .profile-card-2 .icon-block{
@@ -116,9 +117,9 @@
 .profile-card-2 i {
   display: inline-block;
     font-size: 16px;
-    color: #6ab04c;
+    color: #556B2F;
     text-align: center;
-    border: 1px solid #6ab04c;
+    border: 1px solid #556B2F;
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -126,15 +127,17 @@
     margin:0 5px;
 }
 .profile-card-2 i:hover {
-  background-color:#6ab04c;
+  background-color:#566B2F;
   color:#fff;
 }
-
-
+.sub{
+    float: right;
+    
+    
+}
 footer{
    background-color: #556B2F;
 }
-
 </style>
 <body>
 <div style="margin-top:-99px;">
@@ -142,7 +145,7 @@ footer{
       <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
          
       </div>
-      <div class="col-md-8">
+        <div class="col-md-8">
          <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
                <a class="nav-link active" data-toggle="tab" href="#home" style="color:#556B2F;">Profile</a>
@@ -154,23 +157,33 @@ footer{
                <a class="nav-link" data-toggle="tab" href="#menu2" style="color:#556B2F;">Your Post</a>
             </li>
          </ul><br><br>
+         <form action="{% url 'logOut'%}" method="post" style="float: right;">
+                {% csrf_token%}
+                <button class="btn btn-success" type="submit" style="background-color: #556B2F;">logout</button>
+            </form>
          <div class="col-md-3 col-sm-6">
+            
             <div class="card card-block">
-            <h4 class="card-title text-right"><i class="material-icons">settings</i></h4>
-                        <div class="card profile-card-2">
-                          <div class="card-img-block">
-                              <img class="img-fluid" src="https://images.pexels.com/photos/870903/pexels-photo-870903.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="Card image cap">
-                          </div>
-                          <div class="card-body pt-5">
-                              <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="profile-image" class="profile"/>
-                              <h5 class="card-title">Landon Hunt</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                              <div class="icon-block"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"> <i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google-plus"></i></a></div>
-                          </div>
-                      </div>
+                <a href="" class="card-title text-right"><i class="fa fa-cogs" aria-hidden="true"></i></a>
+                <div class="card profile-card-2">
+                    <div class="card-img-block">
+                        <img class="img-fluid" src="https://images.pexels.com/photos/870903/pexels-photo-870903.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="Card image cap">
+                    </div>
+                    <div class="card-body pt-5">
+                        <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="profile-image" class="profile"/>
+                        <h5 class="card-title">Landon Hunt</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p><br>
+                        <div class="icon-block"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"> <i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google-plus"></i></a></div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="sub">
+            <strong><h6 style="color: #556B2F;text-align: center;">Just getting started? Try answering a question!</h6></strong>
+            <p style="text-align: right;font-size: 12px;"> Your most helpful questions, answers and tags will appear here. <br> Start by answering a question or selecting tags that match topics you're interested in.</p>
+          </div>
+          <br><br><br><hr>   
         </div>
-          </div>    
-      </div>
       <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
          
       </div>

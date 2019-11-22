@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.contrib.auth import views 
 
 urlpatterns = [
+    url(r'^jet/', include('jet.urls', 'jet')),
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  
     url(r'^admin/', admin.site.urls),
     url(r'',include('dashboardapp.urls')),
     url(r'^accounts/', include('registration.backends.simple.urls')),
