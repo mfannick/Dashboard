@@ -32,7 +32,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
     'dashboardapp',
+    # 'bootstrap_admin',
+    # 'suit',
+    'admin_shortcuts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,9 +135,75 @@ MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-SITE_HOST = '127.0.0.1:8000'
-DEFAULT_FROM_EMAIL = 'Django Bookmarks '
-EMAIL_HOST = 'mail.yourisp.com'
-EMAIL_PORT = ''
-EMAIL_HOST_USER = 'username'
-EMAIL_HOST_PASSWORD = 'password'
+# SITE_HOST = '127.0.0.1:8000'
+# DEFAULT_FROM_EMAIL = 'Django Bookmarks '
+# EMAIL_HOST = 'mail.yourisp.com'
+# EMAIL_PORT = ''
+# EMAIL_HOST_USER = 'username'
+# EMAIL_HOST_PASSWORD = 'password'
+
+
+# Admin Shortcuts
+
+ADMIN_SHORTCUTS = [
+    {
+        'shortcuts': [
+            {
+                'url': '/',
+                'open_new_window': True,
+            },
+            {
+                'url_name': 'admin:logout',
+            },
+            {
+                'title': 'Users',
+                'url_name': 'admin:auth_user_changelist',
+                'count': 'example.utils.count_users',
+            },
+            {
+                'title': 'Groups',
+                'url_name': 'admin:auth_group_changelist',
+                'count': 'example.utils.count_groups',
+            },
+            {
+                'title': 'Add user',
+                'url_name': 'admin:auth_user_add',
+                'has_perms': 'example.utils.has_perms_to_users',
+            },
+        ]
+    },
+    {
+        'title': 'CMS',
+        'shortcuts': [
+            {
+                'title': 'Pages',
+                'url_name': 'admin:index',
+            },
+            {
+                'title': 'Files',
+                'url_name': 'admin:index',
+            },
+            {
+                'title': 'Contact forms',
+                'icon': 'columns',
+                'url_name': 'admin:index',
+                'count_new': '3',
+            },
+            {
+                'title': 'Products',
+                'url_name': 'admin:index',
+            },
+            {
+                'title': 'Orders',
+                'url_name': 'admin:index',
+                'count_new': '12',
+            },
+        ]
+    },
+]
+ADMIN_SHORTCUTS_SETTINGS = {
+    'show_on_all_pages': True,
+    'hide_app_list': True,
+    'open_new_window': False,
+}
+

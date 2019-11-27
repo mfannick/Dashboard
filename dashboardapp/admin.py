@@ -22,7 +22,6 @@ class CategoryAdmin(admin.ModelAdmin):
     
 class ProfileAdmin(admin.ModelAdmin):
     list_display=['user','image','email']
-    list_filter=['user']
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display=['user','title','content','snippet','category','countCategory']
