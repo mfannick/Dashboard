@@ -3,22 +3,18 @@ from .models import Profile,Question,Answer,Vote,Approved,Category
 from django import template
 from django.db.models import Count
 
-
 # Register your models here.
-
-
-
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display=['category']
+    list_display=['category_name']
     # def count(self,obj):
     #    return Count(obj.category)
 
     # def countCategory(self, obj):
     #     return obj.category.count('category')
     # countCategory.short_description = 'count'
-    list_filter=['category']
+    list_filter=['category_name']
     
 class ProfileAdmin(admin.ModelAdmin):
     list_display=['user','image','email']
@@ -29,11 +25,10 @@ class QuestionAdmin(admin.ModelAdmin):
     #     return Count(self.model.filter(category=category))
     # countCategory.short_description = 'count'
     def countCategory(self, obj):
-        return Count(obj.category)
+        question=obj.category
+        print(obj)
+        print(Question.objects.filter(category=question).count()) 
     countCategory.short_description = 'count'
-    
-    
-
     
 
 class AnswerAdmin(admin.ModelAdmin):
@@ -46,8 +41,15 @@ class ApprovedAdmin(admin.ModelAdmin):
     list_display=['name','approve','score']
 
 admin.site.register(Profile,ProfileAdmin)
-# admin.site.register(Category)
 admin.site.register(Question,QuestionAdmin)
 admin.site.register(Answer,AnswerAdmin)
 admin.site.register(Vote,VoteAdmin)
 admin.site.register(Approved,ApprovedAdmin)
+
+
+
+
+
+##########################################################
+
+

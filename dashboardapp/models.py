@@ -4,24 +4,15 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Category(models.Model):
-    categoryName=(
-        ('HTML','HTML'),
-        ('CSS','CSS'),
-        ('Javascript','Javascript'),
-        ('Angular','Angular'),
-        ('Flask','Flask'),
-        ('Django','Django'),
-        ('Java','Java'),
-        ('Android','Android'),
-    )
-    category=models.CharField(max_length=10,choices=categoryName)
-    # count=.count(category)
+    category_name = models.CharField(max_length = 30, null=True)
+    category_image = models.ImageField(upload_to='category_image/',blank=True,null = True)
+    description = models.CharField(max_length = 300, null = True)
 
     def __str__(self):
-        return self.category
+        return self.category_name
 
 class Question(models.Model):
-    user=models.ForeignKey(User)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
     title=models.CharField(max_length=10)
     content=models.TextField(blank=True)
     snippet=models.ImageField(upload_to='question/',blank=True)
@@ -65,6 +56,10 @@ class Vote(models.Model):
 
     def __str__(self):
         return self.name.user.username
+
+class Invitation(models.Model):
+    name=models.CharField(max_length=30)
+    email=models.EmailField()
 
 
 

@@ -3,8 +3,15 @@
 
 {% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
+<<<<<<< HEAD
 {% block branding %}
 <h1 id="site-name"><a href="{% url 'admin:index' %}">Moringa Help desk</a></h1>
+=======
+{% block title %} Moringa Help Desk{% endblock %}
+{% block branding %}
+<a id="site-name" href="{% url 'admin:index' %}"><img src="/static/images/imageonline-co-whitebackgroundremoved (13).png" alt="moringa" style="margin-left:-40px;height:100px; width:250px;"></a>
+<a href="http://127.0.0.1:8000/signUp/">Send Invitation</a>
+>>>>>>> d32a78cf1baa781c9c00eae4055b45f23afa80db
 {% endblock %}
 
 {% block nav-global %}
