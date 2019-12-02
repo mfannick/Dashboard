@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Question,Answer,Profile
 
 class NewQuestionForm(forms.ModelForm):
+    snippet = forms.ImageField(required=False)
     class Meta:
         model = Question
         exclude = ['user']

@@ -4,17 +4,6 @@ from django import template
 from django.db.models import Count
 
 # Register your models here.
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display=['category_name']
-    # def count(self,obj):
-    #    return Count(obj.category)
-
-    # def countCategory(self, obj):
-    #     return obj.category.count('category')
-    # countCategory.short_description = 'count'
-    list_filter=['category_name']
     
 class ProfileAdmin(admin.ModelAdmin):
     list_display=['user','image','email']
@@ -41,16 +30,9 @@ class VoteAdmin(admin.ModelAdmin):
 class ApprovedAdmin(admin.ModelAdmin):
     list_display=['name','approve','score']
 
+admin.site.register(Category)   
 admin.site.register(Profile,ProfileAdmin)
 admin.site.register(Question,QuestionAdmin)
 admin.site.register(Answer,AnswerAdmin)
 admin.site.register(Vote,VoteAdmin)
 admin.site.register(Approved,ApprovedAdmin)
-
-
-
-
-
-##########################################################
-
-

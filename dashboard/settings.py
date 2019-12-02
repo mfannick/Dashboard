@@ -34,8 +34,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'dashboardapp',
     'bootstrap4',
-     'jet.dashboard',
-     'jet',
+    'crispy_forms',
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dashboard',
         'USER': 'alexie',
-    'PASSWORD':'root',
+        'PASSWORD':'root',
     }
 }
 
@@ -121,7 +122,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+LOGOUT_REDIRECT_URL = '/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 

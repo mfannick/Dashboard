@@ -202,20 +202,19 @@ h5{
             <li class="nav-item">
                <a class="nav-link" data-toggle="tab" href="#menu2" style="color:#556B2F;">Votes</a>
             </li>
-         </ul>
+         </ul><br><br><br><br>
          {% for cont in post_question %}
-      <a href="{% url 'q_answer' cont.id%}" style="text-decoration: none;"><h5> {{cont.title}} </h5></a>             
-    {% endfor %} 
+         <a href="{% url 'q_answer' cont.id%}" style="color:#556B2F;text-decoration: none;"><p> {{cont.title}} </p></a>
+         <p> <strong>{{cont.answer_set.all|length}} answers:</strong> {{cont.content}}</p>
+         {% if cont.snippet%}
+         <p><img src="{{cont.snippet.url}}" alt="ghgh"></p>
+         {% endif %}            
+         {% endfor %} 
      
       </div>
-      <div class="col-md-1"></div>
       <div class="col-md-2">
-         <a href="{% url 'questions' %}" class="btn btn-success" style="background-color: #556B2F;">Ask a question</a>
+            <a href="{% url 'questions' %}" class="btn btn-success" style="background-color: #556B2F;">Ask a question</a>
         <br><br><br><br><br>
-        <h6>Related Question</h6>
-        <br>
-        <p>1. Where Do You Like To Go When You Eat Out?</p>
-        <p>2. Do You Like To Cook?</p>
       </div>
    </div>
    

@@ -21,17 +21,6 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <style>
-   /* Media Queries: Tablet Landscape */
-@media screen and (max-width: 1060px) {
-    #primary { width:67%; }
-    #secondary { width:30%; margin-left:3%;}  
-}
-
-/* Media Queries: Tabled Portrait */
-@media screen and (max-width: 768px) {
-    #primary { width:100%; }
-    #secondary { width:100%; margin:0; border:none; }
-}
 /* Search */
 input {
 	outline: none;
@@ -74,6 +63,13 @@ input:-moz-placeholder {
 }
 input::-webkit-input-placeholder {
 	color: #999;
+}
+.profile{
+   border-radius: 700px;
+   width: 80px;
+   height: 80px;
+   margin-left: 20px;
+   margin-top: 20px;
 }
 h5{
    margin-left: 30px;
@@ -173,17 +169,17 @@ h5{
 <body>
 <div style="margin-top:-99px;">
       <div class="row">
-         <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
-            <div>
-               <div class="card-img-block">
-                  <img class="img-fluid" src="https://images.pexels.com/photos/870903/pexels-photo-870903.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="Card image cap">
+            <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
+               <div>
+                  <div class="card-img-block">
+                     <img class="img-fluid" src="https://images.pexels.com/photos/870903/pexels-photo-870903.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="Card image cap">
+                  </div>
+                  <div class="card-body pt-5">
+                     <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="profile-image" class="profile"/>
+                     <h5 class="card-title">Landon Hunt</h5>
+                  </div>
                </div>
-               <div class="card-body pt-5">
-                  <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="profile-image" class="profile"/>
-                  <h5 class="card-title">Landon Hunt</h5>
-               </div>
-            </div>
-            <br>
+               <br>
          <form>
             <input type="search" placeholder="Find Someone">
          </form>
@@ -192,37 +188,60 @@ h5{
             <button type="button" class="btn btn-success btn-lg btn3d"><span class="glyphicon glyphicon-send"></span></button>
          </p>
       </div>
-      <div class="col-md-7">
-         <h2>Question & Answer</h2>
-         <br><br><br>
-         {% if question %}
-            <h3> {{question.title}} </h3>
-            <p> {{question.content}} </p>
-            <img src="{{quest.snippet.url}}" alt="">
-            <hr>
-            {% for answer in question.answer_set.all %}
-              
-                <p>{{answer.user}}: <span>{{answer.answer}} </p></span>
+      <div class="col-md-8">
+         <h2>Questions & Answers</h2>
+         <ul class="nav nav-tabs" role="tablist" style="width:260px;float:right;">
+            <li class="nav-item">
+               <a class="nav-link active" data-toggle="tab" href="#home" style="color:#556B2F;">All</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" data-toggle="tab" href="#menu1" style="color:#556B2F;">Unanswered</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" data-toggle="tab" href="#menu2" style="color:#556B2F;">Votes</a>
+            </li>
+         </ul><br>
+         {% if questions %}
+            <h5> {{questions.title}} </h5>
+            <p> {{questions.content}} </p>
+            {% if questions.snippet%}
+         <p><img src="{{questions.snippet.url}}" alt="ghgh"></p>
+         {% endif %} 
+            <a href="{%url 'answer' questions.id %}" style="margin: 10px; text-decoration: none;">
+               <button type="button" class="btn btn-success" style="background-color: #556B2F;"><strong>Add answer</strong> </button> </a>
+            <h5>Answers</h5>
+           {% for answer in questions.answer_set.all %}
+                <p><strong>{{answer.user}}:</strong> <span>{{answer.answer}} </p></span>
                 <hr>
             {% endfor%}
-             
+            
+            {% else %}
+            <h5> {{questions.title}} </h5>
+            <p> {{questions.content}} </p>
+            <p> <img src="{{questions.snippet.url}}" alt=""></p>
+            
+            {% for answer in questions.answer_set.all %}
+              
+                <p><strong>{{answer.user}}:</strong> <span>{{answer.answer}} </p></span>
+                <hr>
+            {% endfor%}
+            <a href="{%url 'answer' questions.id %}" style="margin: 10px; text-decoration: none;">
+                  <button type="button" class="btn btn-success" style="background-color: #556B2F;"><strong>Add answer</strong> </button> </a>
         {% endif %} 
 
       </div>
-      <div class="col-md-1"></div>
       <div class="col-md-2">
-        <button class="btn btn-success" style="background-color: #556B2F;">Ask Question</button>
+         <a href="{% url 'questions' %}" class="btn btn-success" style="background-color: #556B2F;">Ask a question</a>
         <br><br><br><br><br>
         <h6>Related Question</h6>
-        <br>
-        <p>1. Where Do You Like To Go When You Eat Out?</p>
-        <p>2. Do You Like To Cook?</p>
         {% for rel in related_question %}
-        <a href=""><p> {{rel.title}} </p></a>
+        <a href="{% url 'q_answer' rel.id%}" style="color:#556B2F;text-decoration: none;"><p> {{rel.title}} </p></a>
         <hr>              
         {% endfor %}
       </div>
    </div>
+   
+</div>
 
 <footer>
       <div class="container-fluid py-3">

@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 # from django.contrib.auth.views import password_reset,password_reset_done,password_reset_confirm
 from django.contrib.auth import views as authViews
 from django.contrib.auth.views import password_reset_confirm
-from django.contrib import admin
+# from django.contrib import admin
 
 urlpatterns = [
     url(r'^login/$', views.logIn, name='logIn'),
@@ -13,8 +13,6 @@ urlpatterns = [
     url(r'^$',views.page,name = 'page'),
     url(r'^learn$',views.learn,name = 'learn'),
     url(r'^profile$',views.profile,name = 'profile'),
-    url(r'^home$',views.home,name='home'),
-    # url(r'^question/$',views.questions, name = 'question'),
     url(r'^new/questions$',views.post_question,name='questions'),
     url(r'^search/$',views.search_question, name = 'search'),
     url(r'^cate/(\d+)/$', views.question_category, name='cate'),
@@ -25,13 +23,14 @@ urlpatterns = [
     name='passwordReset'),
     url(r'^passwordReset/done/$', authViews.PasswordResetDoneView.as_view(template_name='auth/password_reset_done.html'),
     name='password_reset_done'),
-    url(r'^passwordResetConfirm/(?P<uidb64>[0-9A-Za-z]+)/(?P<token>.+)/$',password_reset_confirm,
+    # url(r'^passwordResetConfirm/(?P<uidb64>[0-9A-Za-z]+)/(?P<token>.+)/$',password_reset_confirm,
+    # name='password_reset_confirm'),
+    url(r'^passwordResetConfirm/(?P<uidb64>[0-9A-Za-z]+)/(?P<token>.+)/$',authViews.PasswordResetConfirmView.as_view(template_name='auth/password_reset_confirm.html'),
     name='password_reset_confirm'),
     url(r'^passwordResetComplete/$', authViews.PasswordResetCompleteView.as_view(template_name='auth/password_reset_complete.html'),
-    name='password_reset_complete'),
-    url(r'^admin/$', admin.site.urls),
- 
-    
+    name='password_reset_complete'),   
+    url(r'^new/profile$', views.new_profile, name='new-profile'),
+    # url(r'^profile/(\d+)/$',views.profile,name = 'profile'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

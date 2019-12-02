@@ -31,7 +31,6 @@
     #primary { width:67%; }
     #secondary { width:30%; margin-left:3%;}  
 }
-
 /* Media Queries: Tabled Portrait */
 @media screen and (max-width: 768px) {
     #primary { width:100%; }
@@ -52,7 +51,7 @@ footer{
                   <form action="{% url 'answer' id %}" method="post" enctype="multipart/form-data">
                       {% csrf_token %}
                       {% bootstrap_form form layout='inline'%}
-                      <input type="submit" value="answer" class="btn-primary">
+                      <input type="submit" value="answer" class="btn btn-success" style="background-color: #556B2F;">
                   </form>
                   {% block scripts %}
                   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -81,4 +80,3 @@ footer{
                 
                 </html>
                 {% endblock %} 
-                
