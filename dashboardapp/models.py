@@ -63,18 +63,23 @@ class Approved(models.Model):
     def __str__(self):
         return self.name.user.username
 
-class Vote(models.Model):
-    name=models.ForeignKey(Profile,on_delete=models.CASCADE)
-    answer=models.ForeignKey(Answer,on_delete=models.CASCADE)
-    vote=models.IntegerField()
+# class Vote(models.Model):
+#     name=models.ForeignKey(Profile,on_delete=models.CASCADE)
+#     answer=models.ForeignKey(Answer,on_delete=models.CASCADE)
+#     vote=models.IntegerField()
 
 
-    def __str__(self):
-        return self.name.user.username
+#     def __str__(self):
+#         return self.name.user.username
 
 class Invitation(models.Model):
     name=models.CharField(max_length=30)
     email=models.EmailField()
 
+class Upvote(models.Model):
+    name = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer,on_delete=models.CASCADE)
 
-
+class Downvote(models.Model):
+    name = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer,on_delete=models.CASCADE)

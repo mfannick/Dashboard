@@ -23,17 +23,6 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <style>
-   /* Media Queries: Tablet Landscape */
-@media screen and (max-width: 1060px) {
-    #primary { width:67%; }
-    #secondary { width:30%; margin-left:3%;}  
-}
-
-/* Media Queries: Tabled Portrait */
-@media screen and (max-width: 768px) {
-    #primary { width:100%; }
-    #secondary { width:100%; margin:0; border:none; }
-}
 /* Search */
 input {
 	outline: none;
@@ -76,6 +65,13 @@ input:-moz-placeholder {
 }
 input::-webkit-input-placeholder {
 	color: #999;
+}
+.profile{
+   border-radius: 700px;
+   width: 80px;
+   height: 80px;
+   margin-left: 20px;
+   margin-top: 20px;
 }
 h5{
    margin-left: 30px;
@@ -122,13 +118,7 @@ footer{
 	outline-style: none;
 	outline: medium none;
 }
-.profile{
-   border-radius: 700px;
-   width: 80px;
-   height: 80px;
-   margin-left: 20px;
-   margin-top: 20px;
-}
+
 .btn3d:active,
 .btn3d.active {
 	top: 2px;
@@ -154,6 +144,13 @@ footer{
 .card-body{
    position:relative;
 }
+.profile{
+   border-radius: 700px;
+   width: 80px;
+   height: 80px;
+   margin-left: 20px;
+   margin-top: 20px;
+}
 .profile {
   border-radius: 75%;
   position: absolute;
@@ -173,18 +170,18 @@ h5{
 </style>
 <body>
 <div style="margin-top:-99px;">
-   <div class="row">
-      <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
-         <div>
-            <div class="card-img-block">
-               <img class="img-fluid" src="https://images.pexels.com/photos/870903/pexels-photo-870903.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="Card image cap">
-            </div>
-            <div class="card-body pt-5">
-               <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="profile-image" class="profile"/>
-               <h5 class="card-title">Landon Hunt</h5>
-            </div>
-         </div>
-         <br>
+      <div class="row">
+            <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
+               <div>
+                  <div class="card-img-block">
+                     <img class="img-fluid" src="https://images.pexels.com/photos/870903/pexels-photo-870903.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="Card image cap">
+                  </div>
+                  <div class="card-body pt-5">
+                     <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="profile-image" class="profile"/>
+                     <h5 class="card-title">Landon Hunt</h5>
+                  </div>
+               </div>
+               <br>
          <form>
             <input type="search" placeholder="Find Someone">
          </form>
@@ -194,7 +191,7 @@ h5{
          </p>
       </div>
       <div class="col-md-8">
-         <h2>Questions & Answers</h2>
+         <h2>Questions in {{q_category.category_name}}</h2>
          <ul class="nav nav-tabs" role="tablist" style="width:260px;float:right;">
             <li class="nav-item">
                <a class="nav-link active" data-toggle="tab" href="#home" style="color:#556B2F;">All</a>
@@ -206,30 +203,16 @@ h5{
                <a class="nav-link" data-toggle="tab" href="#menu2" style="color:#556B2F;">Votes</a>
             </li>
          </ul><br><br><br><br>
-         {% if questions %}
-         <h5> {{questions.title}} </h5>
-         <h5> {{questions.content}} </h5>
-         <img src="{{quest.snippet.url}}" alt="">
-   
-         {% for answer in questions.answer_set.all %}
-                   <div class="bg-light mb-2 p-2 border">
-                       <strong>{{answer.user}}: </strong>
-                       <span>{{answer.answer}}</span>
-                   </div>
-                   {% endfor%}
-       <hr>              
-       {% endif %}  
-
+         {% for  question in questions %}
+         <a href="{% url 'q_answer' question.id%}" style="color:#556B2F;text-decoration: none;"><p> {{question.title}} </p></a>
+         
+          {% endfor%}             
+     
       </div>
       <div class="col-md-2">
          <a href="{% url 'questions' %}" class="btn btn-success" style="background-color: #556B2F;">Ask a question</a>
         <br><br><br><br><br>
-        <h6>Related Question</h6>
-        <br>
-        {% for rel in related_question %}
-        <a href=""><p> {{rel.title}} </p></a>
-        <hr>              
-    {% endfor %}
+        
       </div>
    </div>
    

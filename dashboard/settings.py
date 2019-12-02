@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'dashboardapp',
     'bootstrap4',
+    'crispy_forms',
     'jet.dashboard',
     'jet',
     'django.contrib.admin',
@@ -83,8 +84,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dashboard',
-        'USER': 'wecode',
-        'PASSWORD':'123',
+        'USER': 'alexie',
+        'PASSWORD':'root',
     }
 }
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile,Question,Answer,Vote,Approved,Category
+from .models import Profile,Question,Answer,Upvote,Approved,Category
 from django import template
 from django.db.models import Count
 
@@ -24,8 +24,8 @@ class QuestionAdmin(admin.ModelAdmin):
 class AnswerAdmin(admin.ModelAdmin):
     list_display=['user','question','answer']
 
-class VoteAdmin(admin.ModelAdmin):
-    list_display=['name','vote']
+class UpvoteAdmin(admin.ModelAdmin):
+    list_display=['name','answer']
 
 class ApprovedAdmin(admin.ModelAdmin):
     list_display=['name','approve','score']
@@ -34,5 +34,5 @@ admin.site.register(Category)
 admin.site.register(Profile,ProfileAdmin)
 admin.site.register(Question,QuestionAdmin)
 admin.site.register(Answer,AnswerAdmin)
-admin.site.register(Vote,VoteAdmin)
+admin.site.register(Upvote,UpvoteAdmin)
 admin.site.register(Approved,ApprovedAdmin)

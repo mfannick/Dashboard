@@ -204,8 +204,11 @@ h5{
             </li>
          </ul><br><br><br><br>
          {% for cont in post_question %}
-         <a href="{% url 'q_answer' cont.id%}"><p> {{cont.title}} </p></a>
-         <p> <strong>{{cont.answer_set.all|length}} answers:</strong> {{cont.content}}</p>            
+         <a href="{% url 'q_answer' cont.id%}" style="color:#556B2F;text-decoration: none;"><p> {{cont.title}} </p></a>
+         <p> <strong>{{cont.answer_set.all|length}} answers:</strong> {{cont.content}}</p>
+         {% if cont.snippet%}
+         <p><img src="{{cont.snippet.url}}" alt="ghgh"></p>
+         {% endif %}            
          {% endfor %} 
      
       </div>

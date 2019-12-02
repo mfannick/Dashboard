@@ -21,7 +21,7 @@ def page(request):
 def question_category(request, id):
     q_category = Category.objects.filter(id = id).first()
     questions = Question.objects.filter(category = q_category.id).all()
-    return render(request,'question_category.html',{'q_category':q_category,"id":id,"questions":questions})
+    return render(request,'all-pages/question_category.html',{'q_category':q_category,"id":id,"questions":questions})
 
 # @login_required(login_url='/accounts/login/')
 def learn(request):
@@ -34,7 +34,7 @@ def question_answer(request, id):
     q_category = Category.objects.filter(id = questions.category.id).first() 
     answer = Answer.objects.filter(question = questions.id).all()
     related_question = Question.objects.filter(category = q_category.id).all()
-    return render(request,'answers.html',{'q_category':q_category,"id":id,"questions":questions,"related_question":related_question,"answer":answer})
+    return render(request,'all-pages/answers.html',{'q_category':q_category,"id":id,"questions":questions,"related_question":related_question,"answer":answer})
 
 @login_required(login_url='/accounts/login/')
 def post_question(request):
@@ -50,7 +50,7 @@ def post_question(request):
 
     else:
         form = NewQuestionForm()
-    return render(request, 'post_question.html', {"form": form})
+    return render(request, 'all-pages/post_question.html', {"form": form})
 
 @login_required(login_url='/accounts/login')
 def post_answer(request, id):
@@ -68,7 +68,7 @@ def post_answer(request, id):
     else:
         form = AnswerForm()
     title = "Question"
-    return render(request, 'add_answer.html',{"form":form, "id":id} )
+    return render(request, 'all-pages/add_answer.html',{"form":form, "id":id} )
 
 @login_required(login_url='/accounts/login')
 def new_profile(request):
