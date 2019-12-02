@@ -21,6 +21,17 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <style>
+   /* Media Queries: Tablet Landscape */
+@media screen and (max-width: 1060px) {
+    #primary { width:67%; }
+    #secondary { width:30%; margin-left:3%;}  
+}
+
+/* Media Queries: Tabled Portrait */
+@media screen and (max-width: 768px) {
+    #primary { width:100%; }
+    #secondary { width:100%; margin:0; border:none; }
+}
 /* Search */
 input {
 	outline: none;
@@ -161,7 +172,6 @@ h5{
 </style>
 <body>
 <div style="margin-top:-99px;">
-   <div class="row">
       <div class="row">
          <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
             <div>
@@ -213,8 +223,6 @@ h5{
         {% endfor %}
       </div>
    </div>
-   
-</div>
 
 <footer>
       <div class="container-fluid py-3">

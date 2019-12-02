@@ -9,7 +9,7 @@ from django.contrib.auth.views import password_reset_confirm
 
 urlpatterns = [
     url(r'^login/$', views.logIn, name='logIn'),
-    url(r'^signup/$',views.signUp,name='signUp'),
+    url(r'^signUp/$',views.signUp,name='signUp'),
     url(r'^$',views.page,name = 'page'),
     url(r'^learn$',views.learn,name = 'learn'),
     url(r'^profile$',views.profile,name = 'profile'),

@@ -120,7 +120,7 @@ def signUp(request):
             email=form.cleaned_data.get('email')
             send_welcome_email(username,email)
             messages.success(request,f'{username} , your account was successfuly created check your email to log in')
-            return redirect('admin')
+            return redirect('http://127.0.0.1:8000/admin/')
     else:
         form=UserRegistrationForm()
     return render(request,'auth/signUp.html',{'form':form})
