@@ -12,7 +12,8 @@ urlpatterns = [
     url(r'^signUp/$',views.signUp,name='signUp'),
     url(r'^$',views.page,name = 'page'),
     url(r'^learn$',views.learn,name = 'learn'),
-    url(r'^profile$',views.profile,name = 'profile'),
+    url(r'^new_profile$', views.new_profile, name='new_profile'),
+    url(r'^profile/(\d+)$',views.profile,name = 'profile'),
     url(r'^new/questions$',views.post_question,name='questions'),
     url(r'^search/$',views.search_question, name = 'search'),
     url(r'^cate/(\d+)/$', views.question_category, name='cate'),
@@ -29,8 +30,6 @@ urlpatterns = [
     name='password_reset_confirm'),
     url(r'^passwordResetComplete/$', authViews.PasswordResetCompleteView.as_view(template_name='auth/password_reset_complete.html'),
     name='password_reset_complete'),   
-    url(r'^new/profile$', views.new_profile, name='new-profile'),
-    # url(r'^profile/(\d+)/$',views.profile,name = 'profile'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

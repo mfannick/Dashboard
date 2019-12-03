@@ -19,7 +19,7 @@ class AnswerForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     class Meta:
-        model = Question
+        model = Profile
         exclude = ['user']
 
 class UserRegistrationForm(UserCreationForm):

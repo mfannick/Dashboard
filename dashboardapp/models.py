@@ -38,12 +38,17 @@ class Question(models.Model):
   
 
 class Profile(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
-    image=models.ImageField(upload_to='profile/')
-    email=models.EmailField(blank=True)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    coverimage=models.ImageField(upload_to='profile/',blank=True)
+    image=models.ImageField(upload_to='profile/',blank=True)
+    name=models.CharField(max_length=30,blank=True)
+    bio=models.CharField(max_length=30,blank=True)
+    email=models.URLField(blank=True)
+    facebook_page = models.URLField(blank=True)
+    twitter_link = models .URLField(blank=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user
 
 class Answer(models.Model):
     user=models.ForeignKey(User)
