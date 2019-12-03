@@ -1,27 +1,116 @@
 from django.shortcuts import render,redirect
-# from .models import Post,Profiles,Answer,Category
-from .models import Question,Invitation
+from django.http  import HttpResponse,Http404,HttpResponseRedirect
+from .models import Question,Category,Answer,Profile
+from .forms import NewQuestionForm,AnswerForm,ProfileForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .forms import UserRegistrationForm
 from django.contrib import messages
 from django.contrib.auth import login,logout, authenticate
 from .email import send_welcome_email
 from django.contrib.auth.models import User
-
-
-
-
+from django.shortcuts import get_object_or_404
+from django.views.generic import RedirectView
+from django.http  import HttpResponse,HttpResponseRedirect
 
 # Create your views here.
+@login_required(login_url='/login/')
+def page(request):
+    categories = Category.objects.all()
+    return render(request,'all-pages/index.html',{"categories": categories})
 
-def homePage(request):
-    # categorys=Question.objects.get(category=cat)
-    # posts=Question.objects.filter(category=categorys).count()
-    posts=Question.objects.all().count()
-    context={
-        'posts':posts
-    }
-    return render(request,'homePage.html',context)
+# @login_required(login_url='/accounts/login/')
+def question_category(request, id):
+    q_category = Category.objects.filter(id = id).first()
+    questions = Question.objects.filter(category = q_category.id).all()
+    return render(request,'question_category.html',{'q_category':q_category,"id":id,"questions":questions})
+
+# @login_required(login_url='/accounts/login/')
+def learn(request):
+    post_question = Question.objects.all()
+    return render(request,'all-pages/learn.html',{"post_question":post_question})  
+
+# @login_required(login_url='/accounts/login/')
+def question_answer(request, id):
+    questions = Question.objects.filter(id = id).first()
+    q_category = Category.objects.filter(id = questions.category.id).first() 
+    answer = Answer.objects.filter(question = questions.id).all()
+    related_question = Question.objects.filter(category = q_category.id).all()
+    return render(request,'answers.html',{'q_category':q_category,"id":id,"questions":questions,"related_question":related_question,"answer":answer})
+
+@login_required(login_url='/accounts/login/')
+def post_question(request):
+    current_user = request.user
+    profiles = Profile.objects.filter(user = current_user.id).first()
+    if request.method == 'POST':
+        form = NewQuestionForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = current_user
+            post.save()
+            return redirect('learn')
+
+    else:
+        form = NewQuestionForm()
+    return render(request, 'post_question.html', {"form": form})
+
+@login_required(login_url='/accounts/login')
+def post_answer(request, id):
+    current_user = request.user
+    question = Question.objects.filter(id=id).first()
+    profiles = Profile.objects.filter(user = current_user.id).first()
+    if request.method == 'POST':
+        form = AnswerForm(request.POST,request.FILES)
+        if form.is_valid():
+            answers = form.save(commit=False)
+            answers.user = current_user
+            answers.question = question
+            answers.save()
+            return redirect('q_answer', id)
+    else:
+        form = AnswerForm()
+    title = "Question"
+    return render(request, 'add_answer.html',{"form":form, "id":id} )
+
+@login_required(login_url='/accounts/login')
+def new_profile(request):
+  current_user = request.user
+  new_profile = Profile.objects.filter(id=current_user.id)
+  if request.method == 'POST':
+      form = ProfileForm(request.POST, request.FILES)
+      if form.is_valid():
+          profile = form.save(commit=False)
+          profile.username = current_user.profile
+          profile.save()
+      return redirect('profile')
+  else:
+      form = ProfileForm()
+  return render(request, 'all-pages/new-profile.html',{"form":form})
+
+# def profile(request):
+#     return render(request,'all-pages/profile.html',{})
+
+@login_required(login_url='/accounts/login')
+def profile(request):
+ current_user = request.user
+ myprofile = Profile.objects.filter(user = current_user).first()
+ username = User.objects.filter(id = current_user.id).first()
+ return render(request, 'all-pages/profile.html', { "myprofile":myprofile})
+
+@login_required(login_url='/accounts/login')
+def search_question(request):
+    if 'question' in request.GET and request.GET["question"]:
+        search_term = request.GET.get("question")
+        searched_question = Question.search_by_title(search_term)
+        message = f"{search_term}"
+
+        return render(request, "all-pages/search.html",{"message":message,"questions": searched_question})
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'all-pages/search.html',{"message":message})
+def profile(request):
+    profile=Profile.objects.all()
+    return render(request,'all-pages/profile.html',{'profile':profile})  
 
 
 def signUp(request):
@@ -32,24 +121,12 @@ def signUp(request):
             form.save()
             username=form.cleaned_data.get('username')
             email=form.cleaned_data.get('email')
-
-
-            # username = form.cleaned_data['username']
-            # email = form.cleaned_data['email']
-            # password1 = form.cleaned_data['password1']
-            # password2 = form.cleaned_data['password2']
-            # user = User(username = username,email =email)
-            # user.save()
-            # useN=form.cleaned_data.get('username')
             send_welcome_email(username,email)
-            # userN=form.cleaned_data.get('username')
-            messages.success(request,f'{username} , your account was successfuly created')
-            return redirect('logIn')
+            messages.success(request,f'{username} , your account was successfuly created check your email to log in')
+            return redirect('http://127.0.0.1:8000/admin/')
     else:
         form=UserRegistrationForm()
-       
     return render(request,'auth/signUp.html',{'form':form})
-
 def logIn(request):
     if request.method=='POST':
         form=AuthenticationForm(data=request.POST)
@@ -59,12 +136,47 @@ def logIn(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect('homePage')
+                return redirect('page')
     else:
         form=AuthenticationForm()
     return render(request,'auth/logIn.html',{'form':form})
-
 def logOut(request):
     if request.method=='POST':
         logout(request)
     return redirect('logIn')
+
+def upvotes(request,answer_id):
+
+    answer=Answer.objects.get(pk=answer_id)
+    is_liked=False
+    if answer.upvotes.filter(id=request.user.id).exists():
+            answer.upvotes.remove(request.user)
+            is_liked=False
+    else:
+        answer.upvotes.add(request.user)
+        is_liked=True
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def downvotes(request,answer_id):
+
+    answer=Answer.objects.get(pk=answer_id)
+    is_disliked=False
+    if answer.downvotes.filter(id=request.user.id).exists():
+            answer.downvotes.remove(request.user)
+            is_disliked=False
+    else:
+        answer.downvotes.add(request.user)
+        is_disliked=True
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+# class Upvotes(RedirectView):
+#     def get_redirect_url(self, *args, **kwargs):
+#         id=self.kwargs.get(id)
+#         print(id)
+#         answer= get_object_or_404(Answer,id=id)
+#         return answer.get_absolute_url()
+
+# def upvotes(request):
+#     answer= get_object_or_404(Answer,id=request.POST.get('answer_id'))
+#     answer.upvotes.add(request.user)
+#     return redirect('q_answer')
+

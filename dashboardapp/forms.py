@@ -1,11 +1,29 @@
 from django import forms
-from . import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Question,Answer,Profile
 
+class NewQuestionForm(forms.ModelForm):
+    snippet = forms.ImageField(required=False)
+    class Meta:
+        model = Question
+        exclude = ['user']
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ('answer',)
+        widgets = {
+            'answer': forms.Textarea(attrs={'cols': 30, 'rows': 3})
+            }
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        exclude = ['user']
 
 class UserRegistrationForm(UserCreationForm):
-   
+    email=forms.EmailField()
     class Meta:
         model=User
         fields=['username','email','password1','password2']
