@@ -51,10 +51,11 @@ class Profile(models.Model):
         return self.user
 
 class Answer(models.Model):
-    user=models.ForeignKey(User)
-    question=models.ForeignKey(Question)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    question=models.ForeignKey(Question,on_delete=models.CASCADE)
+    upvotes=models.ManyToManyField(User, blank=True,related_name='answer_upvotes')
+    downvotes=models.ManyToManyField(User, blank=True,related_name='answer_downvotes')
     answer=models.TextField()
-    
 
     def __str__(self):
         return self.answer

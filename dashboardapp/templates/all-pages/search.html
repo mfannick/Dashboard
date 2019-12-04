@@ -14,11 +14,13 @@
    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
    <title>HelpDesk Automated</title>
    <link rel="stylesheet" href="/static/css/index.css">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <style>
 /* Search */
@@ -137,16 +139,7 @@ footer{
 <div style="margin-top:-99px;">
    <div class="row">
       <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
-         <img src="/static/images/head.jpeg" class="profile">
-         <h5>Name</h5>
-         <br><br>
-         <form>
-            <input type="search" placeholder="Find Someone">
-         </form>
-         <br><br><br><br><br><br><br><br><br><br><br>
-         <p>
-            <button type="button" class="btn btn-success btn-lg btn3d"><span class="glyphicon glyphicon-send"></span></button>
-         </p>
+         <br><br><br><br><br><br><br><br><br><br><br><br><br>
       </div>
       <div class="col-md-8">
          <h2>Searched Questions</h2>
@@ -154,12 +147,12 @@ footer{
          {% if questions %}
          {% for question in questions %}
           
-               <h3>{{question.title}}</h3>
-               <h3>{{question.content}}</h3>
-               <img src="{{question.snippet.url}}" alt="">
+         <a href="{% url 'q_answer'  question.id%}" style="color:#556B2F;text-decoration: none;"><p> {{ question.title}} </p></a>
+              
+               
            
          {% endfor %}
-       {% endif %}
+         {% endif %}
 
       </div>
       <div class="col-md-2">

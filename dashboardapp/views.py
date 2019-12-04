@@ -23,12 +23,15 @@ def question_category(request, id):
     questions = Question.objects.filter(category = q_category.id).all()
     return render(request,'all-pages/question_category.html',{'q_category':q_category,"id":id,"questions":questions})
 
-# @login_required(login_url='/accounts/login/')
-def learn(request):
+@login_required(login_url='/accounts/login/')
+def learn(request,profile_id):
     post_question = Question.objects.all()
-    return render(request,'all-pages/learn.html',{"post_question":post_question})  
+    current_user = request.user
+    user = User.objects.get(pk=profile_id)
+    profile = Profile.objects.filter(user=profile_id)
+    return render(request,'all-pages/learn.html',{"profile":profile,"post_question":post_question})  
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def question_answer(request, id):
     questions = Question.objects.filter(id = id).first()
     q_category = Category.objects.filter(id = questions.category.id).first() 
@@ -71,19 +74,6 @@ def post_answer(request, id):
     return render(request, 'all-pages/add_answer.html',{"form":form, "id":id} )
 
 
-# def new_profile(request):
-#     current_user = request.user
-#     if request.method == 'POST':
-#         form = ProfileForm(request.POST,request.FILES)
-#         if form.is_valid():
-#             profile = form.save(commit=False)
-#             profile.user= current_user
-#             profile.save()
-#         return redirect('profile')
-#     else:
-#         form =ProfileForm()
-#     return render(request, 'all-pages/new-profile.html', {"form": form}) 
-
 @login_required(login_url='/accounts/login')
 def new_profile(request):
     current_user = request.user
@@ -111,24 +101,33 @@ def profile(request,profile_id):
     profile = Profile.objects.filter(user=profile_id)
     return render (request, 'all-pages/profile.html', {'profile':profile})
 
-# def profile(request):
-#  current_user = request.user
-#  myprofile = Profile.objects.filter(user = current_user).first()
-#  username = User.objects.filter(id = current_user.id).first()
-#  return render(request, 'all-pages/profile.html', { "myprofile":myprofile})
-
 @login_required(login_url='/accounts/login')
 def search_question(request):
     if 'question' in request.GET and request.GET["question"]:
         search_term = request.GET.get("question")
         searched_question = Question.search_by_title(search_term)
         message = f"{search_term}"
-
         return render(request, "all-pages/search.html",{"message":message,"questions": searched_question})
     else:
         message = "You haven't searched for any term"
         return render(request, 'all-pages/search.html',{"message":message})
+def profile(request):
+    return render(request,'all-pages/profile.html',{})
 
+def upvotes(request,answer_id):
+    answer=Answer.objects.get(pk=answer_id)
+    if answer.upvotes.filter(id=request.user.id).exists():
+            answer.upvotes.remove(request.user)
+    else:
+        answer.upvotes.add(request.user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+def downvotes(request,answer_id):
+    answer=Answer.objects.get(pk=answer_id)
+    if answer.downvotes.filter(id=request.user.id).exists():
+            answer.downvotes.remove(request.user)
+    else:
+        answer.downvotes.add(request.user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def signUp(request):
     currentUser=request.user

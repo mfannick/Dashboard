@@ -173,25 +173,28 @@ h5{
 <body>
 <div style="margin-top:-99px;">
     <div class="row">
-        <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
-           <div>
-              <div class="card-img-block">
-                 <img class="img-fluid" src="https://images.pexels.com/photos/870903/pexels-photo-870903.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="Card image cap">
-              </div>
-              <div class="card-body pt-5">
-                 <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="profile-image" class="profile"/>
-                 <h5 class="card-title">Landon Hunt</h5>
-              </div>
-           </div>
-           <br>
-            <form>
-            <input type="search" placeholder="Find Someone">
-            </form>
-            <br><br><br><br><br><br><br><br><br><br><br>
-            <p>
-            <button type="button" class="btn btn-success btn-lg btn3d"><span class="glyphicon glyphicon-send"></span></button>
-            </p>
-        </div>
+            <div class="col-md-2" style="background-color: rgba(89, 114, 46, 0.6);">
+                    <div>
+                       {% if profile %}
+                       {% for profile in profile %}
+                       <div class="card-img-block">
+                             <img class="img-fluid" src="{{profile.coverimage.url}}" alt="Card image cap">
+                       </div>
+                       <div class="card-body pt-5">
+                             <img src="{{profile.image.url}}" alt="profile-image" class="profile">
+                             <h5 class="card-title">{{profile.name}}</h5>
+                       {% endfor %}
+                       {% endif %}
+                    </div>
+                    <br>
+                    <form>
+                       <input type="search" placeholder="Find Someone">
+                    </form>
+                    <br><br><br><br><br><br><br><br><br><br><br>
+                    <p>
+                       <button type="button" class="btn btn-success btn-lg btn3d"><span class="glyphicon glyphicon-send"></span></button>
+                    </p>
+           </div></div>
         <div class="col-md-7">
             <h2>Questions & Answers</h2>
             <ul class="nav nav-tabs" role="tablist" style="width:260px;float:right;">
