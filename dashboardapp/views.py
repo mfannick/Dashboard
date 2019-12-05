@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http  import HttpResponse,Http404,HttpResponseRedirect
-from .models import Question,Category,Answer,Profile
+from .models import Question,Category,Answer,Profile,Upvote
 from .forms import NewQuestionForm,AnswerForm,ProfileForm
 from django.contrib.auth.decorators import login_required
 from .models import Question,Invitation
@@ -17,18 +17,18 @@ def page(request):
     categories = Category.objects.all()
     return render(request,'all-pages/index.html',{"categories": categories})
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def question_category(request, id):
     q_category = Category.objects.filter(id = id).first()
     questions = Question.objects.filter(category = q_category.id).all()
     return render(request,'all-pages/question_category.html',{'q_category':q_category,"id":id,"questions":questions})
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def learn(request):
     post_question = Question.objects.all()
     return render(request,'all-pages/learn.html',{"post_question":post_question})  
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def question_answer(request, id):
     questions = Question.objects.filter(id = id).first()
     q_category = Category.objects.filter(id = questions.category.id).first() 
@@ -142,3 +142,29 @@ def logOut(request):
         logout(request)
     return redirect('logIn')
 
+# @login_required(login_url='/accounts/login')
+# def likeUpvote(request, id):
+    # current_user = request.user
+    # upvotes = 0
+    # vote_answer = Answer.objects.filter(id = id).first()
+    # vote_answer.user=current_user
+    # vote_answer.upvotes = vote_answer.upvotes+1
+    # vote_answer.save()
+    # return redirect("learn")
+   
+def upvotes(request,answer_id):
+    answer=Answer.objects.get(pk=answer_id)
+    # answer.upvotes = answer.upvotes+1
+    if answer.upvotes.filter(id=request.user.id).exists():
+            answer.upvotes.remove(request.user)
+    else:
+        answer.upvotes.add(request.user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def downvotes(request,answer_id):
+    answer=Answer.objects.get(pk=answer_id)
+    if answer.downvotes.filter(id=request.user.id).exists():
+            answer.downvotes.remove(request.user)
+    else:
+        answer.downvotes.add(request.user)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

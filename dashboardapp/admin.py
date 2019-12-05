@@ -25,7 +25,7 @@ class AnswerAdmin(admin.ModelAdmin):
     list_display=['user','question','answer']
 
 class UpvoteAdmin(admin.ModelAdmin):
-    list_display=['name','answer']
+    list_display=['user_name','answer']
 
 class ApprovedAdmin(admin.ModelAdmin):
     list_display=['name','approve','score']

@@ -31,6 +31,8 @@ urlpatterns = [
     name='password_reset_complete'),   
     url(r'^new/profile$', views.new_profile, name='new-profile'),
     # url(r'^profile/(\d+)/$',views.profile,name = 'profile'),
+    url(r'^upvote/(\d+)/$',views.upvotes, name = 'upvotes'),
+    url(r'^downvote/(\d+)/$',views.downvotes, name = 'downvotes'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

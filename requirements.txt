@@ -12,5 +12,6 @@ Pillow==6.2.1
 psycopg2==2.8.4
 python-decouple==3.1
 pytz==2019.3
+django-jet==1.0.6
 soupsieve==1.9.4
 django-admin-shortcuts==2.0.0

@@ -35,8 +35,8 @@ INSTALLED_APPS = [
     'dashboardapp',
     'bootstrap4',
     'crispy_forms',
-    'jet.dashboard',
     'jet',
+    'jet.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,8 +84,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'dashboard',
-        'USER': 'alexie',
-        'PASSWORD':'root',
+        'USER': 'wecode',
+        'PASSWORD':'123',
     }
 }
 

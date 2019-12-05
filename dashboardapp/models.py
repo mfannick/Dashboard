@@ -49,7 +49,10 @@ class Answer(models.Model):
     user=models.ForeignKey(User)
     question=models.ForeignKey(Question)
     answer=models.TextField()
-    
+    upvotes=models.ManyToManyField(User, blank=True,related_name='question_upvotes')
+    downvotes=models.ManyToManyField(User, blank=True,related_name='question_downvotes')
+    # upvotes = models.IntegerField(default = 0)
+    # downvotes = models.IntegerField(default = 0)
 
     def __str__(self):
         return self.answer
@@ -63,21 +66,12 @@ class Approved(models.Model):
     def __str__(self):
         return self.name.user.username
 
-# class Vote(models.Model):
-#     name=models.ForeignKey(Profile,on_delete=models.CASCADE)
-#     answer=models.ForeignKey(Answer,on_delete=models.CASCADE)
-#     vote=models.IntegerField()
-
-
-#     def __str__(self):
-#         return self.name.user.username
-
 class Invitation(models.Model):
     name=models.CharField(max_length=30)
     email=models.EmailField()
 
 class Upvote(models.Model):
-    name = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    user_name = models.ForeignKey(Profile,on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer,on_delete=models.CASCADE)
 
 class Downvote(models.Model):
