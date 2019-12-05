@@ -43,7 +43,7 @@ class Profile(models.Model):
     image=models.ImageField(upload_to='profile/',blank=True)
     name=models.CharField(max_length=30,blank=True)
     bio=models.CharField(max_length=30,blank=True)
-    email=models.URLField(blank=True)
+    email=models.EmailField(max_length=254,blank=True)
     facebook_page = models.URLField(blank=True)
     twitter_link = models .URLField(blank=True)
 
