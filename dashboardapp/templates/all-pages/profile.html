@@ -158,10 +158,10 @@ footer{
         <div class="col-md-8">
          <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-               <a class="nav-link active" data-toggle="tab" href="" style="color:#556B2F;">Profile</a>
+               <a class="nav-link active" data-toggle="tab" href="{% url 'profile' user.id %}" style="color:#556B2F;">Profile</a>
             </li>
             <li class="nav-item">
-               <a class="nav-link" data-toggle="tab" href="" style="color:#556B2F;">Edit Profile</a>
+               <a class="nav-link" data-toggle="tab" href="{% url 'new_profile'%}" style="color:#556B2F;">Edit Profile</a>
             </li>
             <li class="nav-item">
                <a class="nav-link" data-toggle="tab" href="#menu2" style="color:#556B2F;">Your Post</a>
@@ -174,7 +174,7 @@ footer{
          <div class="col-md-3 col-sm-6">
             
             <div class="card card-block">
-                <a href="{% url 'new_profile'%}" class="card-title text-right"><i class="fa fa-cogs" aria-hidden="true"></i></a>
+                <a href="{% url 'new_profile' %}" class="card-title text-right"><i class="fa fa-cogs" aria-hidden="true"></i></a>
                 
                 <div class="card profile-card-2">
                     {% if profile %}
@@ -189,6 +189,14 @@ footer{
                         <div class="icon-block"><a href="{{profile.facebook_page}}"><i class="fa fa-facebook"></i></a><a href="{{profile.twitter_link}}"> <i class="fa fa-twitter"></i></a><a href="{{profile.email}}"> <i class="fa fa-google-plus"></i></a></div>
                     </div>
                     {% endfor %}
+                    {%else%}
+                  <div class="card-img-block">
+                     <img class="img-fluid" src="/static/images/cover.png" alt="Card image cap">
+                  </div>
+                  <div class="card-body pt-5">
+                     <img src="/static/images/profile.png" alt="profile-image" class="profile">
+                     <h5 class="card-title">{{user}}</h5>
+                  </div>
                     {% endif %}
                 </div>
             </div>

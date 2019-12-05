@@ -197,17 +197,17 @@ h5{
          {% for answer in questions.answer_set.all %}
          <p><strong>{{answer.user}}:</strong> <span>{{answer.answer}} </p></span>
          {% if answer.user.id == request.user.id %}
-         <p>Upvotes:{{answer.upvotes.count}}</p>
-         <p>Downvotes:{{answer.downvotes.count}}</p>
+         <p><strong style="color: #556B2F;">Upvotes:</strong>{{answer.upvotes.count}}</p>
+         <!-- <p>Downvotes:{{answer.downvotes.count}}</p> -->
          {% else%}
          <div class="row">
             <div class="col-md-1"></div>
             <a href="{% url 'upvotes' answer.id %}"><img
                   src="https://img.icons8.com/material-rounded/24/000000/facebook-like.png" style="height: 15px;width: 20px;">
             </a><span>{{answer.upvotes.count}}</span>
-            <a href="{% url 'downvotes' answer.id %}"><img
+            <!-- <a href="{% url 'downvotes' answer.id %}"><img
                   src="https://img.icons8.com/material-sharp/24/000000/thumbs-down.png" style="height: 15px;width: 20px;">
-            </a><span>{{answer.downvotes.count}}</span>
+            </a><span>{{answer.downvotes.count}}</span> -->
          </div>
          {% endif%}
          <hr>

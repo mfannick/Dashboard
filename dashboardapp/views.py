@@ -86,7 +86,7 @@ def new_profile(request):
             profile = form.save(commit=False)
             profile.user = current_user
             profile.save()
-        return redirect('profile')
+        return redirect('profile',current_user.id)
     else:
         if Profile.objects.filter(user_id=current_user).exists():
             form = ProfileForm(instance = Profile.objects.get(user_id=current_user))
@@ -95,10 +95,10 @@ def new_profile(request):
     return render(request, 'all-pages/new-profile.html', {"form": form})
 
 @login_required(login_url='/accounts/login')
-def profile(request):
+def profile(request,profile_id):
     current_user = request.user
-    # user = User.objects.get(pk=profile_id)
-    profile = Profile.objects.filter(user=current_user).first()
+    user = User.objects.get(pk=profile_id)
+    profile = Profile.objects.filter(user=profile_id)
     return render (request, 'all-pages/profile.html', {'profile':profile})
 
 @login_required(login_url='/accounts/login')
@@ -111,7 +111,6 @@ def search_question(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'all-pages/search.html',{"message":message})
-
 
 def upvotes(request,answer_id):
     answer=Answer.objects.get(pk=answer_id)
