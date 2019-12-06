@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Question,Answer,Profile
+from .models import Question,Answer,Profile,Approved
 
 class NewQuestionForm(forms.ModelForm):
     snippet = forms.ImageField(required=False)
@@ -19,8 +19,14 @@ class AnswerForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     class Meta:
-        model = Question
-        exclude = ['user']
+        model = Profile
+        fields = ['coverimage','image','bio','email','facebook_page','twitter_link']
+
+class ApproveForm(forms.ModelForm):
+    class Meta:
+        model = Approved
+        fields = ['approve']
+
 
 class UserRegistrationForm(UserCreationForm):
     email=forms.EmailField()

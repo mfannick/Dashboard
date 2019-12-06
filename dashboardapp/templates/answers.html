@@ -178,7 +178,7 @@
             {% if questions %}
             <h5> {{questions.title}} by {{ questions.user.username}} </h5>
             <h5> {{questions.content}} </h5>
-            {% for answer in questions.answer_set.all %}
+            {% for answer in questions.answer_set.all.sort(answer.upvotes.count) %}
             <h5>{{answer.user}}: <span>{{answer.answer}} </h5></span>
             {% if answer.user.id == request.user.id %}
             <p>Upvotes:{{answer.upvotes.count}}</p>

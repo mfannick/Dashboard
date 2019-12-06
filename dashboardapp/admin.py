@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile,Question,Answer,Category
+from .models import Profile,Question,Answer,Category,Approved
 from django import template
 from django.db.models import Count
 
@@ -27,9 +27,13 @@ class AnswerAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display=['category_name','category_image','description']
 
+class ApprovedAdmin(admin.ModelAdmin):
+    list_display=['question','approve']
+
 admin.site.register(Category,CategoryAdmin)   
 admin.site.register(Profile,ProfileAdmin)
 admin.site.register(Question,QuestionAdmin)
 admin.site.register(Answer,AnswerAdmin)
+admin.site.register(Approved,ApprovedAdmin)
 
 

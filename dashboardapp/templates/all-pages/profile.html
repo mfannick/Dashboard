@@ -150,9 +150,7 @@ footer{
             <li class="nav-item">
                <a class="nav-link active" data-toggle="tab" href="#home" style="color:#556B2F;">Profile</a>
             </li>
-            <li class="nav-item">
-               <a class="nav-link" data-toggle="tab" href="#menu1" style="color:#556B2F;">Edit Profile</a>
-            </li>
+  
             <li class="nav-item">
                <a class="nav-link" data-toggle="tab" href="#menu2" style="color:#556B2F;">Your Post</a>
             </li>
@@ -164,20 +162,54 @@ footer{
          <div class="col-md-3 col-sm-6">
             
             <div class="card card-block">
-                <a href="" class="card-title text-right"><i class="fa fa-cogs" aria-hidden="true"></i></a>
+                <a href="{% url 'new_profile'%}" class="card-title text-right"><i class="fa fa-cogs" aria-hidden="true"></i></a>
                 <div class="card profile-card-2">
+                    {% if request.user.profile.coverimage.url %}
                     <div class="card-img-block">
-                        <img class="img-fluid" src="https://images.pexels.com/photos/870903/pexels-photo-870903.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="Card image cap">
+                        <img class="img-fluid" src="{{request.user.profile.coverimage.url}}" alt="Card image cap">
                     </div>
+                    {% else %}
+                    <div class="card-img-block">
+                        <img class="img-fluid" src="/static/images/0_QS8uwKeiYZcfJ7iD.jpg" alt="Card image cap">
+                    </div>
+                    {% endif %}
                     <div class="card-body pt-5">
-                        <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="profile-image" class="profile"/>
+                        {% if request.user.profile.image.url %}
+                        <img src="{{request.user.profile.image.url}}" alt="profile-image" class="profile"/>
+                        {% else %}
+                        <img src="/static/images/default.jpg" alt="profile-image" class="profile"/>
+                        {% endif %}
                         <h5 class="card-title">{{request.user.username}}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p><br>
-                        <div class="icon-block"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"> <i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google-plus"></i></a></div>
+                        {% if request.user.profile.bio %}
+                        <p class="card-text">{{request.user.profile.bio}}</p><br>
+                        {% endif %}
+                        <div class="icon-block">
+                            {% if request.user.profile.facebook_page %}
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        {% endif %}
+                        {% if request.user.profile.twitter_link %}
+                        <a href="#"> <i class="fa fa-twitter"></i></a>
+                        {% endif %}
+                        {% if request.user.profile.email %}
+                        <a href="#"> <i class="fa fa-google-plus"></i></a>
+                        {% endif %}
+                      </div>
                     </div>
                 </div>
             </div>
           </div>
+          <div  id="menu2">
+              <h2>Your Questions</h2>
+              <br><br><br><br>
+             
+              {% for question in questions %}
+               
+              <a href="{% url 'q_answer' question.id%}" style="color:#556B2F;text-decoration: none;"><p> {{question.title}} </p></a>
+                <!-- <h1>dcfvghjkl;</h1>     -->
+                
+              {% endfor %}
+              
+          
           <div class="sub">
             <strong><h6 style="color: #556B2F;text-align: center;">Just getting started? Try answering a question!</h6></strong>
             <p style="text-align: right;font-size: 12px;"> Your most helpful questions, answers and tags will appear here. <br> Start by answering a question or selecting tags that match topics you're interested in.</p>
@@ -200,6 +232,10 @@ footer{
           <div class="row">
               <div class="col-md-8"></div>
               <div class="col-md-4 text-right small align-self-end"><p><a href="" style="color: black;">Privacy policy</a>   <a href="" style="color: black;">Acceptable</a>   <a href="" style="color: black;">Facebook</a>   <a href="" style="color: black;">Twitter</a> </p></div>
+          </div>
+          <div class="row">
+               </div>
+
           </div>
       </div>
   </footer>

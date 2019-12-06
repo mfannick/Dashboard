@@ -4,7 +4,7 @@ from .models import Question,Category,Answer,Profile
 from .forms import NewQuestionForm,AnswerForm,ProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, ApproveForm
 from django.contrib import messages
 from django.contrib.auth import login,logout, authenticate
 from .email import send_welcome_email
@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.views.generic import RedirectView
 from django.http  import HttpResponse,HttpResponseRedirect
+from django.db.models import Count
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -23,7 +24,7 @@ def page(request):
 def question_category(request, id):
     q_category = Category.objects.filter(id = id).first()
     questions = Question.objects.filter(category = q_category.id).all()
-    return render(request,'question_category.html',{'q_category':q_category,"id":id,"questions":questions})
+    return render(request,'all-pages/question_category.html',{'q_category':q_category,"id":id,"questions":questions})
 
 # @login_required(login_url='/accounts/login/')
 def learn(request):
@@ -32,11 +33,34 @@ def learn(request):
 
 # @login_required(login_url='/accounts/login/')
 def question_answer(request, id):
+    
     questions = Question.objects.filter(id = id).first()
     q_category = Category.objects.filter(id = questions.category.id).first() 
-    answer = Answer.objects.filter(question = questions.id).all()
+    answer = Answer.objects.filter(question = questions.id).order_by('-upvotes')
+    # sorted_answer= sorted(answer, key= lambda answer:answer.upvotes.count(), reverse=True)
+    sorted_answer = Answer.objects.annotate(answer_count=Count('upvotes')).order_by('answer_count')
     related_question = Question.objects.filter(category = q_category.id).all()
-    return render(request,'answers.html',{'q_category':q_category,"id":id,"questions":questions,"related_question":related_question,"answer":answer})
+    form = ApproveForm()
+
+    ##########################
+    # current_user = request.user
+    # answer = Answer.objects.filter(id=id).first()
+    # profiles = Profile.objects.filter(user = current_user.id).first()
+    # if request.method == 'POST':
+    #     form = ApproveForm(request.POST,request.FILES)
+    #     if form.is_valid():
+    #         approveAnswer = form.save(commit=False)
+    #         approveAnswer.user = current_user
+    #         approveAnswer.answer = answer
+    #         approveAnswer.save()
+    #         return redirect('q_answer', id)
+    # else:
+    #     form = ApproveForm()
+    # title = "approve"
+    #############################
+
+   
+    return render(request,'all-pages/answers.html',{'q_category':q_category,"id":id,"questions":questions,"related_question":related_question,"answer":sorted_answer,'form':form})
 
 @login_required(login_url='/accounts/login/')
 def post_question(request):
@@ -70,7 +94,7 @@ def post_answer(request, id):
     else:
         form = AnswerForm()
     title = "Question"
-    return render(request, 'add_answer.html',{"form":form, "id":id} )
+    return render(request, 'all-pages/add_answer.html',{"form":form, "id":id} )
 
 @login_required(login_url='/accounts/login')
 def new_profile(request):
@@ -95,7 +119,9 @@ def profile(request):
  current_user = request.user
  myprofile = Profile.objects.filter(user = current_user).first()
  username = User.objects.filter(id = current_user.id).first()
- return render(request, 'all-pages/profile.html', { "myprofile":myprofile})
+ questions=Question.objects.filter(user=current_user)
+ print(username)
+ return render(request, 'all-pages/profile.html', { "myprofile":myprofile,'questions':questions})
 
 @login_required(login_url='/accounts/login')
 def search_question(request):
@@ -146,37 +172,64 @@ def logOut(request):
     return redirect('logIn')
 
 def upvotes(request,answer_id):
-
     answer=Answer.objects.get(pk=answer_id)
-    is_liked=False
     if answer.upvotes.filter(id=request.user.id).exists():
-            answer.upvotes.remove(request.user)
-            is_liked=False
+            answer.upvotes.remove(request.user)    
     else:
         answer.upvotes.add(request.user)
-        is_liked=True
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def downvotes(request,answer_id):
-
     answer=Answer.objects.get(pk=answer_id)
-    is_disliked=False
     if answer.downvotes.filter(id=request.user.id).exists():
             answer.downvotes.remove(request.user)
-            is_disliked=False
     else:
         answer.downvotes.add(request.user)
-        is_disliked=True
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-# class Upvotes(RedirectView):
-#     def get_redirect_url(self, *args, **kwargs):
-#         id=self.kwargs.get(id)
-#         print(id)
-#         answer= get_object_or_404(Answer,id=id)
-#         return answer.get_absolute_url()
 
-# def upvotes(request):
-#     answer= get_object_or_404(Answer,id=request.POST.get('answer_id'))
-#     answer.upvotes.add(request.user)
-#     return redirect('q_answer')
 
+@login_required(login_url='/accounts/login')
+def new_profile(request):
+    current_user = request.user
+    if request.method == 'POST':
+        if Profile.objects.filter(user_id=current_user).exists():
+            form = ProfileForm(request.POST, request.FILES,instance=Profile.objects.get(user_id=current_user))
+        else:
+            form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = current_user
+            profile.save()
+        return redirect('profile')
+    else:
+        if Profile.objects.filter(user_id=current_user).exists():
+            form = ProfileForm(instance = Profile.objects.get(user_id=current_user))
+        else:
+            form = ProfileForm()
+    return render(request, 'all-pages/new-profile.html', {"form": form})
+
+# @login_required(login_url='/accounts/login')
+# def profile(request,profile_id):
+#     current_user = request.user
+#     user = User.objects.get(pk=profile_id)
+#     profile = Profile.objects.filter(user=profile_id)
+#     return render (request, 'all-pages/profile.html', {'profile':profile})
+
+def approve_answer(request, id):
+    current_user = request.user
+    question = Question.objects.filter(id=id).first()
+    answer = Answer.objects.filter(question=question).first()
+    profiles = Profile.objects.filter(user = current_user.id).first()
+    if request.method == 'POST':
+        form = ApproveForm(request.POST,request.FILES)
+        if form.is_valid():
+            approveAnswer = form.save(commit=False)
+            approveAnswer.user = current_user
+            approveAnswer.answer = answer
+            approveAnswer.question=question
+            approveAnswer.save()
+            return redirect('learn')
+    else:
+        form = AnswerForm()
+    title = "approve"
+    return render(request, 'all-pages/answer.html',{"form":form, "id":id,'question':question,'answer':answer} )

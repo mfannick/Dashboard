@@ -42,8 +42,12 @@ class Question(models.Model):
 
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
-    image=models.ImageField(upload_to='profile/')
-    email=models.EmailField(blank=True)
+    coverimage=models.ImageField(default='default.jpg',upload_to='profile/',blank=True)
+    image=models.ImageField(default='default.jpg',upload_to='profile/',blank=True)
+    bio=models.CharField(default='bio',max_length=30,blank=True)
+    email=models.EmailField(default='moringa@gmail.com',blank=True)
+    facebook_page = models.URLField(default='https://www.youtube.com/watch?v=CQ90L5jfldw&t=417s',blank=True)
+    twitter_link = models .URLField(default='https://www.youtube.com/watch?v=CQ90L5jfldw&t=417s',blank=True)
 
     def __str__(self):
         return self.user.username
@@ -51,8 +55,8 @@ class Profile(models.Model):
 class Answer(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     question=models.ForeignKey(Question,on_delete=models.CASCADE)
-    upvotes=models.ManyToManyField(User, blank=True,related_name='question_upvotes')
-    downvotes=models.ManyToManyField(User, blank=True,related_name='question_downvotes')
+    upvotes=models.ManyToManyField(User, blank=True,related_name='answer_upvotes')
+    downvotes=models.ManyToManyField(User, blank=True,related_name='answer_downvotes')
     answer=models.TextField()
    
     
@@ -63,7 +67,11 @@ class Answer(models.Model):
     def voteById(cls,id):
         review = Answer.objects.get(id=id)
         return Q_questions
-
+class Approved(models.Model):
+    approve=models.BooleanField()
+    question=models.ForeignKey(Question,on_delete=models.CASCADE)
+    answer=models.OneToOneField(Answer,on_delete=models.CASCADE)
+   
         
 
 
